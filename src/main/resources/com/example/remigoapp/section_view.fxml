@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@../../../style/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.remigoapp.SectionController">
+   <children>
+      <VBox fx:id="conMenu" alignment="BOTTOM_CENTER" prefWidth="300.0" styleClass="menu">
+         <children>
+            <BorderPane prefHeight="1000.0" prefWidth="1000.0">
+               <top>
+                  <Label styleClass="label-white" text="Menu" BorderPane.alignment="CENTER_LEFT" />
+               </top>
+               <center>
+                  <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+               </center>
+               <bottom>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="140.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Pane fx:id="paneBack" maxHeight="60.0" maxWidth="60.0" onMouseClicked="#onClickPaneBack" prefHeight="60.0" styleClass="button">
+                           <children>
+                              <SVGPath content="M 24 40 L 8 24 L 24 8 L 26.1 10.1 L 13.7 22.5 H 40 V 25.5 H 13.7 L 26.1 37.9 Z" scaleX="1.3" scaleY="1.3" scaleZ="1.3" translateX="5.0" translateY="5.0" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="paneAdd" maxHeight="60.0" maxWidth="60.0" onMouseClicked="#onClickPaneAdd" styleClass="button">
+                           <children>
+                              <SVGPath content="M22.5 38V25.5H10V22.5H22.5V10H25.5V22.5H38V25.5H25.5V38Z" scaleX="1.3" scaleY="1.3" scaleZ="1.3" translateX="5.0" translateY="5.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="conMain" prefWidth="700.0" styleClass="main">
+         <children>
+            <BorderPane prefHeight="1000.0" prefWidth="1000.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </BorderPane>
+         </children></VBox>
+   </children>
+</HBox>

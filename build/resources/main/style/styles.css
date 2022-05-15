@@ -1,0 +1,47 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Medium.ttf');
+}
+
+.label {
+    -fx-font-family: "Roboto";
+    -fx-font-size: 20px;
+
+}
+
+.button {
+    -fx-background-color: #C4C4C4;
+    -fx-background-radius: 30px;
+    -fx-pref-height: 60px;
+    -fx-font-family: "Roboto";
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.text-field{
+    -fx-pref-height: 50px;
+    -fx-background-radius: 14px;
+    -fx-background-color: #E7E7E7;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 20, 0, 0, 0);
+}
+
+.label-white {
+    -fx-font-family: "Roboto";
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.list-view {
+    -fx-background-color:  #787878
+}
+
+.menu{
+    -fx-background-color:  #787878
+
+}
+
+.main{
+    -fx-background-color:  #D3D3D3
+
+}
