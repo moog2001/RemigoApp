@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 
-public class DatabaseHandler {
+public class DatabaseHandler  {
 
 
     DatabaseHandler(){
@@ -23,6 +23,8 @@ public class DatabaseHandler {
         }
         System.out.println("Opened database successfully");
     }
+
+
 
 
 
