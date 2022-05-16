@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Education extends MemoDaily{
     private int streak;
-    private static final int TYPE = 4;
+    private static final int type = Constants.TYPE_EDUCATION;
 
     public Education(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate,
                      LocalDate nextRemindDate, int interval, int streak) {
@@ -12,7 +12,7 @@ public class Education extends MemoDaily{
         this.streak = streak;
     }
 
-    public int getType(){ return TYPE;}
+    public int getType(){ return type;}
 
     public Education(int streak) {
         this.streak = streak;
