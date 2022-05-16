@@ -8,14 +8,14 @@ public class DatabaseHandler {
 
 
     DatabaseHandler(){
-        connect();
+      //  connect();
     }
 
     private void connect() {
         Connection c = null;
 
         try {
-            Class.forName(Constants.JCDBClass);
+         Class.forName(Constants.JCDBClass);
             c = DriverManager.getConnection(Constants.JCDBConnection);
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());

@@ -25,15 +25,18 @@ public class HelloApplication extends Application {
         databaseHandler = new DatabaseHandler();
         user = new User("TestUser", "test@test.com", "testPass", 1,
                 false, "TestFName", "TestLName", 18, "Male");
-
         List<MemoDate> memoDateList = new ArrayList<>();
-
         MemoDate memoDate = new Education("TestMemoEdu", "TestingEdu", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 1, 1);
-
         memoDateList.add(memoDate);
         user.setMemoDateList(memoDateList);
-
         manager = new Manager(user);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login_view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        databaseHandler = new DatabaseHandler();
+        stage.show();
         }
 
 //        manager.startTimer();
