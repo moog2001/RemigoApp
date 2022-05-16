@@ -7,7 +7,7 @@ public class Memo {
     protected String text;
     protected int memoId;
     protected LocalDate createDate;
-    private static final int TYPE = 1;
+    private static final int type = Constants.TYPE_MEMO;
 
     public Memo(String title, String text, int memoId, LocalDate createDate) {
         this.title = title;
@@ -23,7 +23,7 @@ public class Memo {
         memo = null;
         return true;
     }
-    public int getType(){ return TYPE;}
+    public int getType(){ return type;}
 
     public String getTitle() {
         return title;
