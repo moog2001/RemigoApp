@@ -15,7 +15,6 @@ import java.util.TimerTask;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
-<<<<<<< Updated upstream
     Manager manager;
     User user;
     @Override
@@ -23,14 +22,16 @@ public class HelloApplication extends Application {
         user = new User("TestUser", "test@test.com", "testPass", 1,
                 false, "TestFName", "TestLName", 18, "Male");
 
-        List<MemoDate> memoDateList = new ArrayList<>();;
-        MemoDate memoDate = new MemoDate("TestMemo", "Testing", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        List<MemoDate> memoDateList = new ArrayList<>();
+
+        MemoDate memoDate = new Education("TestMemoEdu", "TestingEdu", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 1, 1);
+
         memoDateList.add(memoDate);
         user.setMemoDateList(memoDateList);
 
         manager = new Manager(user);
+
 //        manager.startTimer();
-=======
 
 
     private static HelloApplication appInstance;
@@ -39,7 +40,9 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         appInstance = this;
->>>>>>> Stashed changes
+
+        manager.startTimer();
+
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login_view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());

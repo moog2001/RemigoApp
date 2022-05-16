@@ -4,12 +4,15 @@ import java.time.LocalDate;
 
 public class Education extends MemoDaily{
     private int streak;
+    private static final int TYPE = 4;
 
     public Education(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate,
                      LocalDate nextRemindDate, int interval, int streak) {
         super(title, text, memoId, createDate, lastRemindDate, nextRemindDate, interval);
         this.streak = streak;
     }
+
+    public int getType(){ return TYPE;}
 
     public Education(int streak) {
         this.streak = streak;
