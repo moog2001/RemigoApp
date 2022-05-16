@@ -34,27 +34,10 @@ public class HelloApplication extends Application {
         user.setMemoDateList(memoDateList);
 
         manager = new Manager(user);
+        }
 
 //        manager.startTimer();
-
-
-    private static HelloApplication appInstance;
-    DatabaseHandler databaseHandler = null;
-
-    @Override
-    public void start(Stage stage) throws IOException {
-        appInstance = this;
-
-        manager.startTimer();
-
-
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login_view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        databaseHandler = new DatabaseHandler();
-        stage.show();
-    }
+    
 
 
 
