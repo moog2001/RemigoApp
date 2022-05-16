@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class MemoDate extends Memo {
     protected LocalDate lastRemindDate;
     protected LocalDate nextRemindDate;
+    private static final int TYPE = 2;
 
     public MemoDate(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate, LocalDate nextRemindDate) {
         super(title, text, memoId, createDate);
@@ -18,6 +19,8 @@ public class MemoDate extends Memo {
     }
 
     public MemoDate(){}
+
+    public int getType(){ return TYPE;}
 
     public LocalDate getLastRemindDate() {
         return lastRemindDate;

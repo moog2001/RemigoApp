@@ -7,6 +7,7 @@ public class Memo {
     protected String text;
     protected int memoId;
     protected LocalDate createDate;
+    private static final int TYPE = 1;
 
     public Memo(String title, String text, int memoId, LocalDate createDate) {
         this.title = title;
@@ -22,6 +23,7 @@ public class Memo {
         memo = null;
         return true;
     }
+    public int getType(){ return TYPE;}
 
     public String getTitle() {
         return title;

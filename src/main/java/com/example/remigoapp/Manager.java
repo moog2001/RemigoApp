@@ -12,7 +12,7 @@ public class Manager {
         @Override
         public void run() {
 
-            getDueMemoList();
+            getDueMemoDateList();
 
         }
 
@@ -46,7 +46,7 @@ public class Manager {
         return date;
     }
 
-    public void getDueMemoList(){
+    public void getDueMemoDateList(){
         MemoDate memoDate;
         List<MemoDate> memoDateList;
         memoDateList = currentUser.getMemoDateList();

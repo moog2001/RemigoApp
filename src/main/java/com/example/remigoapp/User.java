@@ -11,9 +11,6 @@ public class User extends Person {
     private boolean isGuest;
     private List<Memo> memoList = new ArrayList<>();
     private List<MemoDate> memoDateList = new ArrayList<>();
-    private List<MemoDaily> memoDailyList = new ArrayList<>();
-    private List<Education> educationList = new ArrayList<>();
-
 
     public User(){
     }
@@ -49,21 +46,6 @@ public class User extends Person {
         this.memoDateList = memoDateList;
     }
 
-    public List<MemoDaily> getMemoDailyList() {
-        return memoDailyList;
-    }
-
-    public void setMemoDailyList(List<MemoDaily> memoDailyList) {
-        this.memoDailyList = memoDailyList;
-    }
-
-    public List<Education> getEducationList() {
-        return educationList;
-    }
-
-    public void setEducationList(List<Education> educationList) {
-        this.educationList = educationList;
-    }
 
     public List<Memo> getMemoList() {
         return memoList;
