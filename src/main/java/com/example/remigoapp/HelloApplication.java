@@ -15,39 +15,27 @@ import java.util.TimerTask;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
-<<<<<<< Updated upstream
     Manager manager;
     User user;
+    HelloApplication appInstance;
+    DatabaseHandler databaseHandler;
     @Override
     public void start(Stage stage) throws IOException {
+        appInstance = this;
+        databaseHandler = new DatabaseHandler();
         user = new User("TestUser", "test@test.com", "testPass", 1,
                 false, "TestFName", "TestLName", 18, "Male");
 
-        List<MemoDate> memoDateList = new ArrayList<>();;
+        List<MemoDate> memoDateList = new ArrayList<>();
+        ;
         MemoDate memoDate = new MemoDate("TestMemo", "Testing", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
         memoDateList.add(memoDate);
         user.setMemoDateList(memoDateList);
 
         manager = new Manager(user);
-//        manager.startTimer();
-=======
-
-
-    private static HelloApplication appInstance;
-    DatabaseHandler databaseHandler = null;
-
-    @Override
-    public void start(Stage stage) throws IOException {
-        appInstance = this;
->>>>>>> Stashed changes
-
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login_view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        databaseHandler = new DatabaseHandler();
-        stage.show();
+        manager.startTimer();
     }
+
 
 
 
@@ -55,8 +43,20 @@ public class HelloApplication extends Application {
         launch();
     }
 
-    public HelloApplication getInstance() {
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public HelloApplication getAppInstance() {
         return appInstance;
     }
 
+    public DatabaseHandler getDatabaseHandler() {
+        return databaseHandler;
+    }
 }
