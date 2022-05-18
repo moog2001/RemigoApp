@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 
-public class DatabaseHandler  {
+public class DatabaseHandler extends SQLi {
 
 
     DatabaseHandler(){
@@ -15,8 +15,8 @@ public class DatabaseHandler  {
         Connection c = null;
 
         try {
-            Class.forName(Constants.JCDBClass);
-            c = DriverManager.getConnection(Constants.JCDBConnection);
+            Class.forName(Constants.JCDB_CLASS);
+            c = DriverManager.getConnection(Constants.JCDB_CONNECTION);
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
@@ -24,6 +24,9 @@ public class DatabaseHandler  {
         System.out.println("Opened database successfully");
     }
 
+    public void add(Memo memoInput){
+
+    }
 
 
 

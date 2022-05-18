@@ -6,8 +6,8 @@ public class Constants {
     static public int TYPE_MEMO_DAILY = 2;
     static public int TYPE_EDUCATION = 3;
     static public String NAME_PACKAGE = "com.example.remigoapp";
-    static public String JCDBConnection = "jdbc:sqlite:com.example.remigoapp.db";
-    static public String JCDBClass = "org.sqlite.JDBC";
+    static public String JCDB_CONNECTION = "jdbc:sqlite:com.example.remigoapp.db";
+    static public String JCDB_CLASS = "org.sqlite.JDBC";
 
 
 }
