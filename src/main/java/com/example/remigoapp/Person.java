@@ -1,3 +1,6 @@
+/**
+ * This class implements a simple abstract class
+ */
 package com.example.remigoapp;
 
 abstract class Person {

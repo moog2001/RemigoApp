@@ -13,15 +13,17 @@ import java.util.*;
 
 public class Manager {
     private User currentUser = new User();
-    private Timer timer  = new Timer();
-    private  List<MemoDate> memoDateList;
-    TimerTask task = new TimerTask() {
+    private Timer checkNewRemind = new Timer();
+    private List<MemoDate> memoDateList;
+    private List<MemoDate> remindTodayList = new ArrayList<>();
+
+    TimerTask checkRemind = new TimerTask() {
         @Override
         public void run() {
             getDueMemoDateList();
+
+            System.out.println("YES");
         }
-
-
     };
 
     public Manager(User currentUser) {
@@ -37,16 +39,18 @@ public class Manager {
     }
 
     public void startTimer(){
+        if(memoDateList == null)
+            memoDateList = currentUser.getMemoDateList();
 
-            timer.scheduleAtFixedRate(task,0,5000);
+        updateRemindToday();
+        checkNewRemind.scheduleAtFixedRate(checkRemind, 0, Constants.CHECK_INTERVAL);
     }
 
-    private void notifyUser(int i){
-        MemoDate memoDate = memoDateList.get(i);;
-        //
+    private void notifyUser(int remindCount){
+
         Notifications notificationBuilder = Notifications.create()
-                .title(memoDate.title)
-                .text(memoDate.text)
+                .title("You have " + remindCount + " notifications")
+                .text("Click here to see them")
                 .graphic(null)
                 .hideAfter(Duration.seconds(30))
                 .position(Pos.BOTTOM_RIGHT)
@@ -71,20 +75,29 @@ public class Manager {
     }
 
     public void getDueMemoDateList(){
-        MemoDate memoDate;
+        updateRemindToday();
 
-        if(memoDateList == null)
-            memoDateList = currentUser.getMemoDateList();
+        int remindTodaySize = remindTodayList.size();
 
-
-        for(int i = 0; i < memoDateList.size(); i++){
-            memoDate = memoDateList.get(i);
-            if(memoDate.getNextRemindDate().isEqual(LocalDate.now())){
-                notifyUser(i);
-                System.out.println(memoDate.getTitle() + " " + memoDate.getText());
-            }
+        if(remindTodaySize <= 0) {
+            System.out.println("Skipped");
+            return;
         }
 
+        notifyUser(remindTodaySize);
+    }
+
+    private void updateRemindToday(){
+        MemoDate memoDate;
+        if(memoDateList.size() != 0)
+            remindTodayList =  new ArrayList<>();;
+
+        for(int i = 0; i < memoDateList.size() ; i++){
+            memoDate = memoDateList.get(i);
+            if(memoDate.getNextRemindDate().isEqual(LocalDate.now())){
+                remindTodayList.add(memoDate);
+            }
+        }
     }
 
 }

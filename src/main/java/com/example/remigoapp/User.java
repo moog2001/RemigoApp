@@ -15,7 +15,7 @@ public class User extends Person {
     public User(){
     }
     public User(String userName, String eMail, String password, int userId, boolean isGuest,
-                String firstName, String lastName, int age, String gender) {
+                String firstName, String lastName, int age, String gender,List<Memo> memoList, List<MemoDate> memoDateList) {
         this.userName = userName;
         this.eMail = eMail;
         this.password = password;
@@ -25,6 +25,8 @@ public class User extends Person {
         this.lastName = lastName;
         this.age = age;
         this.gender = gender;
+        this.memoList = memoList;
+        this.memoDateList = memoDateList;
     }
 
     public User(String userName, String eMail, String password, int userId, boolean isGuest) {

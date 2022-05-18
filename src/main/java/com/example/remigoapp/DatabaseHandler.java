@@ -29,8 +29,4 @@ public class DatabaseHandler {
         return user;
     }
 
-
-
-
-
 }
