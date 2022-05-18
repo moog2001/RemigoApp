@@ -19,9 +19,33 @@ public class DatabaseHandler {
             c = DriverManager.getConnection(Constants.JCDB_CONNECTION);
     }
 
-    public void resetAsGuest(){
-        
+    public void resetAsGuest() throws SQLException {
+        Statement statement = c.createStatement();
+        statement.executeQuery("delete from user where first_name = \"AS\" and last_name=\"GUEST\"");
     }
+
+    public boolean createUser() throws SQLException {
+        PreparedStatement statement = c.prepareStatement("INSERT INTO user (first_name, last_name,age,gender,user_name,e_mail) Values('AS', 'GUEST',0,'FEMALE','ASGUEST','ASGUEST')", Statement.RETURN_GENERATED_KEYS);
+        int affectedRows = statement.executeUpdate();
+
+        if(affectedRows == 0){
+            throw new SQLException("Could not insert into AS GUEST");
+            return false;
+        }
+        ResultSet resultSet = statement.getGeneratedKeys();
+        if(!resultSet.next()){
+            throw new SQLException("Could not get generated keys from AS GUEST");
+            return false;
+        }
+        resultSet.getInt(1);
+
+
+
+
+
+    }
+
+    private bool createUserMemo
 
     public User getUserData(String userIdInput) throws SQLException {
         Statement statement = c.createStatement();
