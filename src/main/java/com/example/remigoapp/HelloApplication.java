@@ -33,8 +33,6 @@ public class HelloApplication extends Application {
         manager.startTimer();
 
 
-
-
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login_view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Hello!");
@@ -42,7 +40,6 @@ public class HelloApplication extends Application {
         stage.show();
         }
 
-//        manager.startTimer();
     
 
 

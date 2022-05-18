@@ -1,0 +1,19 @@
+Index: src/main/java/com/example/remigoapp/DatabaseHandler.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.remigoapp;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.DriverManager;\r\n\r\n\r\npublic class DatabaseHandler {\r\n\r\n\r\n    DatabaseHandler(){\r\n        connect();\r\n    }\r\n\r\n    private void connect() {\r\n        Connection c = null;\r\n\r\n        try {\r\n            Class.forName(Constants.JCDBClass);\r\n            c = DriverManager.getConnection(Constants.JCDBConnection);\r\n        } catch (Exception e) {\r\n            System.err.println(e.getClass().getName() + \": \" + e.getMessage());\r\n            System.exit(0);\r\n        }\r\n        System.out.println(\"Opened database successfully\");\r\n    }\r\n\r\n\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/remigoapp/DatabaseHandler.java b/src/main/java/com/example/remigoapp/DatabaseHandler.java
+--- a/src/main/java/com/example/remigoapp/DatabaseHandler.java	(revision b87118f330e80a7715b1712e6ee2fb02be067974)
++++ b/src/main/java/com/example/remigoapp/DatabaseHandler.java	(date 1652687648145)
+@@ -8,7 +8,7 @@
+ 
+ 
+     DatabaseHandler(){
+-        connect();
++        //connect();
+     }
+ 
+     private void connect() {
