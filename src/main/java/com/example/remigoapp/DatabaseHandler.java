@@ -17,11 +17,12 @@ public class DatabaseHandler {
     private void connect() throws SQLException, ClassNotFoundException {
         Class.forName(Constants.JCDB_CLASS);
         c = DriverManager.getConnection(Constants.JCDB_CONNECTION);
+        resetAsGuest();
     }
 
     public void resetAsGuest() throws SQLException {
-        Statement statement = c.createStatement();
-        statement.executeQuery("delete from user where first_name = \"AS\" and last_name=\"GUEST\"");
+        PreparedStatement statement = c.prepareStatement("delete from user where first_name='AS' and last_name='GUEST'");
+        statement.executeUpdate();
 
         String firstName = "AS";
         String lastName = "GUEST";
@@ -53,7 +54,7 @@ public class DatabaseHandler {
         return userId;
     }
 
-    private int createMemo(Memo memoInput, int userIdInput) throws SQLException {
+    public int createMemo(Memo memoInput, int userIdInput) throws SQLException {
         PreparedStatement statement = c.prepareStatement("INSERT INTO memo Values(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         statement.setInt(1, memoInput.getType());
         statement.setString(2, memoInput.getTitle());
