@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6200dfda-e456-4dad-9c95-5c6cbfd1ef7c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/DatabaseHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Manager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/remigoapp/DatabaseHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/remigoapp/DatabaseHandler.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
