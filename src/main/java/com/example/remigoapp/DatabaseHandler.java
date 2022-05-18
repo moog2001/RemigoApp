@@ -20,6 +20,14 @@ public class DatabaseHandler {
         resetAsGuest();
     }
 
+
+    /**
+     * test method for the DatabaseHandler class
+     * @throws SQLException
+     * @author Moog
+     * @version 1.0.0
+     * @since 2022-5-18
+     */
     public void resetAsGuest() throws SQLException {
         PreparedStatement statement = c.prepareStatement("delete from user where first_name='AS' and last_name='GUEST'");
         statement.executeUpdate();
@@ -35,8 +43,25 @@ public class DatabaseHandler {
         User asGuestUser = new User(userName,eMail,password,Constants.NULL_INT,isGuest,firstName,lastName,age,gender);
         int userId = createUser(asGuestUser);
         asGuestUser.setUserId(userId);
+        Memo memoTest = new Memo("test title", "test text", Constants.NULL_INT, LocalDate.now());
+        int memoTestId = createMemo(memoTest, userId);
+        memoTest.setMemoId(memoTestId);
+
+        User asGuestClone = getUserData(asGuestUser.getUserId()); // add breakpoint and debug to see the result.
+
     }
 
+
+    /**
+     * creates User object in the database and returns the id on it.
+     * remember to set the returned id/
+     * @param user
+     * @return id
+     * @throws SQLException
+     * @author Moog
+     * @version 1.0.0
+     * @since 2022-5-18
+     */
     public int createUser(User user) throws SQLException {
 
 
@@ -54,8 +79,20 @@ public class DatabaseHandler {
         return userId;
     }
 
+    /**
+     *
+     * creates Memo object in the database and returns the id in it.
+     * remember to set the returned id.
+     * @param memoInput
+     * @param userIdInput
+     * @return
+     * @throws SQLException
+     * @author Moog
+     * @version 1.0.0
+     * @since 2022-5-18
+     */
     public int createMemo(Memo memoInput, int userIdInput) throws SQLException {
-        PreparedStatement statement = c.prepareStatement("INSERT INTO memo Values(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement statement = c.prepareStatement("INSERT INTO memo(type,title,text,create_date,user_id) Values(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         statement.setInt(1, memoInput.getType());
         statement.setString(2, memoInput.getTitle());
         statement.setString(3, memoInput.getText());
@@ -93,7 +130,7 @@ public class DatabaseHandler {
 //
 //    };
 
-    public User getUserData(String userIdInput) throws SQLException {
+    public User getUserData(int userIdInput) throws SQLException {
         Statement statement = c.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from user where user_id=" + userIdInput);
         if (!resultSet.next()) {
@@ -112,7 +149,7 @@ public class DatabaseHandler {
         boolean isGuest = resultSet.getBoolean(11);
         statement.close();
         List<Memo> memoList = getMemoList(userMemoId);
-        List<MemoDate> memoDateList = getMemoDateList(userMemoDateId);
+        List<MemoDate> memoDateList = null; // getMemoDateList(userMemoDateId);
         return new User(userName, eMail, password, userId, isGuest, firstName, lastName, age, gender, memoList, memoDateList);
 
 
@@ -147,11 +184,13 @@ public class DatabaseHandler {
                     interval = resultSet.getInt(8);
                     memoDate = new MemoDaily(title, text, memoDateId, createDate, lastRemindDate, nextRemindDate, interval);
                     memoDateList.add(memoDate);
+                    break;
                 }
                 case 4: {
                     int streak = resultSet.getInt(9);
                     memoDate = new Education(title, text, memoDateId, createDate, lastRemindDate, nextRemindDate, interval, streak);
                     memoDateList.add(memoDate);
+                    break;
                 }
             }
 
