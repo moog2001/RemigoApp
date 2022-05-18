@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class HelloApplication extends Application {
     HelloApplication appInstance;
     DatabaseHandler databaseHandler;
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
         appInstance = this;
         databaseHandler = new DatabaseHandler();
         user = new User("TestUser", "test@test.com", "testPass", 1,

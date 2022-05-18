@@ -2,30 +2,31 @@ package com.example.remigoapp;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class DatabaseHandler {
+    Connection c = null;
 
 
-    DatabaseHandler(){
+    DatabaseHandler() throws SQLException, ClassNotFoundException {
         connect();
     }
 
-    private void connect() {
-        Connection c = null;
-
-        try {
+    private void connect() throws SQLException, ClassNotFoundException {
             Class.forName(Constants.JCDB_CLASS);
             c = DriverManager.getConnection(Constants.JCDB_CONNECTION);
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Opened database successfully");
     }
 
     public void add(Memo memoInput){
 
+    }
+
+    public User getUserData(User userInput) throws SQLException {
+        Statement statement = c.createStatement();
+        User user = null;
+        return user;
     }
 
 
