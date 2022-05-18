@@ -30,7 +30,7 @@ public class HelloApplication extends Application {
         memoDateList.add(memoDate);
         user.setMemoDateList(memoDateList);
         manager = new Manager(user);
-
+        manager.startTimer();
 
 
 
