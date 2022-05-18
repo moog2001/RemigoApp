@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6200dfda-e456-4dad-9c95-5c6cbfd1ef7c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Education.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Education.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Manager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Memo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Memo.java" afterDir="false" />
@@ -13,6 +14,10 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/MemoDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/MemoDate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Person.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/User.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/com.example.remigoapp.db" beforeDir="false" afterPath="$PROJECT_DIR$/com.example.remigoapp.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/DatabaseHandler.java" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
