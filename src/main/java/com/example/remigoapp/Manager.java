@@ -1,3 +1,13 @@
+/**
+ * @author Ganbayar Sumiyakhuu
+ * Date:5/18/2022
+ *
+ * Description of code:
+ * This class checks the reminder date of MemoDaily, MemoDate, Education and notify the user.
+ * currnetUser: current session of the user's User
+ * memoDateList: list of every MemoDate, MemoDaily, Education
+ * remindTodayList: list of every MemoDate, MemoDaily, Education should be reminded today
+ */
 package com.example.remigoapp;
 
 import javafx.application.Platform;
@@ -17,14 +27,6 @@ public class Manager {
     private List<MemoDate> memoDateList;
     private List<MemoDate> remindTodayList = new ArrayList<>();
 
-    TimerTask checkRemind = new TimerTask() {
-        @Override
-        public void run() {
-            getDueMemoDateList();
-
-            System.out.println("YES");
-        }
-    };
 
     public Manager(User currentUser) {
         this.currentUser = currentUser;
@@ -34,18 +36,36 @@ public class Manager {
     public Manager(){
     };
 
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
+    /**
+     * checkNewRemind Timer's checkRemind TimerTask
+     * calls getDueDateList after the timer is done.
+     */
+    TimerTask checkRemind = new TimerTask() {
+        @Override
+        public void run() {
 
+            boolean tmp = getDueMemoDateList();
+        }
+    };
+
+    /**
+     * This method starts the Timer usually called start of the application.
+     * Checks memoDateList is empty. if memoDateList is empty gets memoDateList from the user.
+     * class updateRemindToday() method starts Fixed Rate Timer.
+     * Schedule of the Timer is Constants.CHECK_INTERVAL starts without delay
+     */
     public void startTimer(){
-        if(memoDateList == null)
+        if(memoDateList.size() <= 0)
             memoDateList = currentUser.getMemoDateList();
 
         updateRemindToday();
         checkNewRemind.scheduleAtFixedRate(checkRemind, 0, Constants.CHECK_INTERVAL);
     }
 
+    /**
+     * This method send notifaction to the user. This sends how many notification currently user has.
+     * @param remindCount
+     */
     private void notifyUser(int remindCount){
 
         Notifications notificationBuilder = Notifications.create()
@@ -64,29 +84,27 @@ public class Manager {
 
     }
 
-    private Date convertLocalDate(LocalDate localDate){
-        //default time zone
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-
-        //local date + atStartOfDay() + default time zone + toInstant() = Date
-        Date date = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
-
-        return date;
-    }
-
-    public void getDueMemoDateList(){
+    /**
+     * This method class updateRemindToday method.
+     * if today doesn't have anything to remind the method ends returns false.
+     * if today has something to remind it calls notifyUser method.
+     */
+    public boolean getDueMemoDateList(){
         updateRemindToday();
 
         int remindTodaySize = remindTodayList.size();
 
-        if(remindTodaySize <= 0) {
-            System.out.println("Skipped");
-            return;
-        }
+        if(remindTodaySize <= 0)
+            return false;
 
         notifyUser(remindTodaySize);
+        return true;
     }
 
+    /**
+     * This Method resets the remindTodayList list.
+     * Then if local date matches the memoDate nextRemindDate it gets added to the remindTodayList List.
+     */
     private void updateRemindToday(){
         MemoDate memoDate;
         if(memoDateList.size() != 0)
@@ -98,6 +116,12 @@ public class Manager {
                 remindTodayList.add(memoDate);
             }
         }
+    }
+    /**
+     * Simple getter method for currentUser.
+     */
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
 }

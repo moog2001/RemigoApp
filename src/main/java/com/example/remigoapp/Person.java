@@ -1,5 +1,12 @@
 /**
- * This class implements a simple abstract class
+ * @author Ganbayar Sumiyakhuu
+ * Date:5/18/2022
+ * Description of code:
+ * This class implements a simple abstract class to use for inheritance later.
+ * firstName: First name of this person
+ * field: lastName Last name of this person
+ * age: Age of this person
+ * gender: gender of this person
  */
 package com.example.remigoapp;
 
@@ -9,6 +16,9 @@ abstract class Person {
     protected int age;
     protected String gender;
 
+    /**
+     * Simple getter and setter methods for all the parameters.
+     */
     public String getFirstName() {
         return firstName;
     }
