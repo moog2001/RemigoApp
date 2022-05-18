@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6200dfda-e456-4dad-9c95-5c6cbfd1ef7c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/remigoapp/DatabaseHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
