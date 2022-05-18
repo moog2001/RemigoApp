@@ -8,6 +8,6 @@ public class Constants {
     static public String NAME_PACKAGE = "com.example.remigoapp";
     static public String JCDB_CONNECTION = "jdbc:sqlite:com.example.remigoapp.db";
     static public String JCDB_CLASS = "org.sqlite.JDBC";
-
+    static public int CHECK_INTERVAL = 6 * 1000 * 60 * 60 * 60;
 
 }
