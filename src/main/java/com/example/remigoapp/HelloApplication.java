@@ -29,7 +29,6 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("section_view.fxml"));
-        //FXMLLoader sectionLoader = new FXMLLoader(HelloApplication.class.getResource("section_view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         ObservableList<MemoDate> memoDateData =  FXCollections.observableArrayList();

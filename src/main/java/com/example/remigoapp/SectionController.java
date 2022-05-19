@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -45,7 +42,7 @@ public class SectionController implements Initializable {
     private TextField memoTitle = new TextField();
 
     @FXML
-    private TextField memoText = new TextField();
+    private TextArea memoText = new TextArea();
 
     private List<MemoDate> memoDateList = new ArrayList<>();
     ObservableList<MemoDate> memoDateData;
@@ -77,9 +74,7 @@ public class SectionController implements Initializable {
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
 
-        memoText.textProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("textfield changed from " + oldValue + " to " + newValue);
-        });
+        
     }
     private class CustomListCell extends ListCell<MemoDate> {
         private HBox content;
