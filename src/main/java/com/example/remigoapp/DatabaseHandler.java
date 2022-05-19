@@ -19,8 +19,8 @@ public class DatabaseHandler {
         c = DriverManager.getConnection(Constants.JCDB_CONNECTION);
         Statement statement = c.createStatement();
         statement.executeUpdate("PRAGMA foreign_keys = ON"); // this line allows cascade delete on the sql database
-        resetDatabaseData("agreed");
-//        resetAsGuest();
+//        resetDatabaseData("agreed");
+        resetAsGuest();
     }
 
 
@@ -104,7 +104,7 @@ public class DatabaseHandler {
         String query;
 
         switch (type){
-            case 2:{
+            case Constants.TYPE_MEMO_DATE:{
                 query= "UPDATE memo_date " +
                         "SET " +
                         "title = '" + memoDateInput.getTitle() + "', " +
@@ -115,7 +115,7 @@ public class DatabaseHandler {
                         "WHERE memo_date_id =" + memoDateInput.getMemoId();
                 break;
             }
-            case 3:{
+            case Constants.TYPE_MEMO_DAILY:{
                 query = "UPDATE memo_date " +
                         "SET " +
                         "title = '" + memoDateInput.getTitle() + "', " +
@@ -127,14 +127,14 @@ public class DatabaseHandler {
                         "WHERE memo_date_id =" + memoDateInput.getMemoId();
                 break;
             }
-            case 4:{
+            case Constants.TYPE_EDUCATION:{
                 query = "UPDATE memo_date " +
                         "SET " +
                         "title = '" + memoDateInput.getTitle() + "', " +
                         "text = '" + memoDateInput.getText() + "', " +
                         "create_date = '" + memoDateInput.getCreateDate().toString() + "', " +
                         "last_remind_date = '" + memoDateInput.getLastRemindDate().toString() + "', " +
-                        "next_remind_date = '" + memoDateInput.getNextRemindDate().toString() + "' " +
+                        "next_remind_date = '" + memoDateInput.getNextRemindDate().toString() + "', " +
                         "interval = " + ((MemoDaily)memoDateInput).getInterval() + ", " +
                         "streak = " + ((Education)memoDateInput).getStreak() + " " +
                         "WHERE memo_date_id =" + memoDateInput.getMemoId();
@@ -244,8 +244,7 @@ public class DatabaseHandler {
         String query = "UPDATE user " +
                 "SET " +
                 "first_name = '" + userInput.getFirstName() + "', " +
-                "last_name = '" + userInput.getFirstName() + "', " +
-                "first_name = '" + userInput.getFirstName() + "', " +
+                "last_name = '" + userInput.getLastName() + "', " +
                 "age = " + userInput.getAge() + ", " +
                 "gender = '" + userInput.getGender() + "', " +
                 "user_name = '" + userInput.getUserName() + "', " +
