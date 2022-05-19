@@ -17,10 +17,8 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class SectionController implements Initializable {
@@ -77,7 +75,7 @@ public class SectionController implements Initializable {
                     return;
                 memoTitle.setText(currentMemoDate.getTitle());
                 memoText.setText(currentMemoDate.getText());
-
+                listView.
 
             }
         });
@@ -128,13 +126,25 @@ public class SectionController implements Initializable {
                 MemoDate newMemoDate = new MemoDate();
                 Alert alert = new Alert(Alert.AlertType.WARNING);
 
-                if(memoTitle.getText() == null){
+                if(memoTitle.getText() == ""){
                     alert.setTitle("Error");
+                    alert.showAndWait();
+                    return;
                 }
 
                 newMemoDate.setTitle(memoTitle.getText());
+                newMemoDate.setText(memoText.getText());
+                newMemoDate.setCreateDate(LocalDate.now());
+                newMemoDate.setNextRemindDate(memoDatePicker.getValue());
+                newMemoDate.setMemoId(generateMemoId());
 
-                System.out.println("button clicked");
+                memoDateList.add(newMemoDate);
+                Variables.memoDateList = memoDateList;
+                if(memoDateData == null)
+                    memoDateData = Variables.memoDateData;
+                memoDateData.add(newMemoDate);
+                setListView(memoDateData);
+                clearText();
             }
         });
     }
@@ -170,9 +180,27 @@ public class SectionController implements Initializable {
         listView.setItems(memoDateData);
     }
 
+    private void clearText(){
+        memoText.setText("");
+        memoTitle.setText("");
+    }
+
+    private int generateMemoId(){
+        String uniqueID = UUID.randomUUID().toString();
+        int memoId = 0;
+        for(int i = 0; i < uniqueID.length(); i++){
+            char tmp = uniqueID.charAt(i);
+            if(tmp >= '0' && tmp <= '9'){
+                memoId = memoId * 10 + Character.getNumericValue(tmp);
+            }
+        }
+
+        return memoId;
+    }
+
     @FXML
     void onClickPaneAdd(MouseEvent event) {
-
+        clearText();
     }
 
     @FXML
