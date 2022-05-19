@@ -37,10 +37,10 @@ public class HelloApplication extends Application {
 
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login_view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("Hello!");
+            stage.setScene(scene);
+            stage.show();
         }
 
     
