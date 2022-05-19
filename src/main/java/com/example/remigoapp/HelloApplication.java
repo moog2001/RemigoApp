@@ -20,7 +20,7 @@ import java.util.TimerTask;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
-    Manager manager;
+    public Manager manager;
     User user;
     HelloApplication appInstance;
     DatabaseHandler databaseHandler;
@@ -29,19 +29,27 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("section_view.fxml"));
+        //FXMLLoader sectionLoader = new FXMLLoader(HelloApplication.class.getResource("section_view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+
         ObservableList<MemoDate> memoDateData =  FXCollections.observableArrayList();
         SectionController sectionController = fxmlLoader.<SectionController>getController();;
+        sectionController.setListView(memoDateData);
+
         appInstance = this;
         databaseHandler = new DatabaseHandler();
 
         user = new User("TestUser", "test@test.com", "testPass", 1,
                 false, "TestFName", "TestLName", 18, "Male");
         List<MemoDate> memoDateList = new ArrayList<>();
-        MemoDate memoDate = new Education("TestMemoEdu", "TestingEdu",
+        MemoDate memoDate1 = new Education("TestMemoEdu1", "TestingEdu1",
                 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 1, 1);
-        memoDateList.add(memoDate);
-        memoDateData.add(memoDate);
+        MemoDate memoDate2 = new Education("TestMemoEdu2", "TestingEdu2",
+                1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 0, 0);
+        memoDateList.add(memoDate1);
+        memoDateData.add(memoDate1);
+        memoDateList.add(memoDate2);
+        memoDateData.add(memoDate2);
 
         user.setMemoDateList(memoDateList);
         manager = new Manager(user);

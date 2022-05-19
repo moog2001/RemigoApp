@@ -63,7 +63,7 @@ public class Manager {
     }
 
     /**
-     * This method send notifaction to the user. This sends how many notification currently user has.
+     * This method send notification to the user. This sends how many notification currently user has.
      * @param remindCount
      */
     private void notifyUser(int remindCount){

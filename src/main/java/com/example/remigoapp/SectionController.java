@@ -1,5 +1,6 @@
 package com.example.remigoapp;
 
+import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -15,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,15 +41,17 @@ public class SectionController implements Initializable {
     @FXML
     private ListView<MemoDate> listView = new ListView<>();
 
+    @FXML
+    private TextField memoTitle = new TextField();
+
+    @FXML
+    private TextField memoText = new TextField();
+
     private List<MemoDate> memoDateList = new ArrayList<>();
     ObservableList<MemoDate> memoDateData;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        MemoDate memoDate = new Education("TestMemoEdu", "TestingEdu",
-//                1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 1, 1);
-//
-//        listView.getItems().add(memoDate);
 
         listView.setCellFactory(new Callback<ListView<MemoDate>, ListCell<MemoDate>>() {
             @Override
@@ -59,8 +64,21 @@ public class SectionController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 MemoDate memoDate = listView.getSelectionModel().getSelectedItem();
+                if(memoDate == null)
+                    return;
+                memoTitle.setText(memoDate.getTitle());
+                memoText.setText(memoDate.getText());
                 System.out.println("Clicked on " + memoDate.getText());
             }
+        });
+
+        memoTitle.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+        });
+
+        memoText.textProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
     }
     private class CustomListCell extends ListCell<MemoDate> {
@@ -90,6 +108,10 @@ public class SectionController implements Initializable {
         }
     }
 
+    public void setListView(ObservableList<MemoDate> memoDateData){
+        listView.setItems(memoDateData);
+    }
+
     @FXML
     void onClickPaneAdd(MouseEvent event) {
 
@@ -100,7 +122,4 @@ public class SectionController implements Initializable {
 
     }
 
-    public void setListView(ObservableList<MemoDate> memoDateData){
-        listView.setItems(memoDateData);
-    }
 }
