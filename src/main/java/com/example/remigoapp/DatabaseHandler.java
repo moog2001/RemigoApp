@@ -19,8 +19,8 @@ public class DatabaseHandler {
         c = DriverManager.getConnection(Constants.JCDB_CONNECTION);
         Statement statement = c.createStatement();
         statement.executeUpdate("PRAGMA foreign_keys = ON"); // this line allows cascade delete on the sql database
-//        resetDatabaseData("agreed");
-        resetAsGuest();
+        resetDatabaseData("agreed");
+//        resetAsGuest();
     }
 
 
@@ -54,12 +54,217 @@ public class DatabaseHandler {
         int memoTestId = createMemo(memoTest, userId);
         memoTest.setMemoId(memoTestId);
 
+        MemoDate memoDateTest = new MemoDate("test title", "test text", Constants.NULL_INT, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        int memoDateTestId = createMemoDate(memoDateTest, userId);
+        memoDateTest.setMemoId(memoDateTestId);
+
+        MemoDaily memoDailyTest = new MemoDaily("test title", "test text", Constants.NULL_INT, LocalDate.now(), LocalDate.now(), LocalDate.now(), Constants.NULL_INT);
+        int memoDailyTestId = createMemoDate(memoDailyTest, userId);
+        memoDailyTest.setMemoId(memoDailyTestId);
+
         Education educationTest = new Education("test title", "test text", Constants.NULL_INT,LocalDate.now(), LocalDate.now(), LocalDate.now(),Constants.NULL_INT,Constants.NULL_INT);
         int educationTestId = createMemoDate(educationTest, userId);
         educationTest.setMemoId(educationTestId);
+
         User asGuestClone = getUserData(asGuestUser.getUserId()); // add breakpoint and debug to see the result.
 
+        asGuestClone.setUserName("updated AS GUEST username");
+        updateUserData(asGuestClone);
+        asGuestClone = getUserData(asGuestClone.getUserId());
+
+        memoTest.setTitle("test update title");
+        boolean testUpdate = updateMemo(memoTest);
+        Memo memoTestClone = memoTest;
+
+        memoDateTest.setTitle("test update title");
+        boolean testUpdateDate = updateMemoDate(memoDateTest);
+        MemoDate memoDateTestClone = memoDateTest;
+
+        memoDailyTest.setTitle("test update title");
+        boolean testUpdateDaily = updateMemoDate(educationTest);
+        MemoDaily memoDailyTestClone = memoDailyTest;
+
+        educationTest.setTitle("test update title");
+        boolean testUpdateEducation = updateMemoDate(educationTest);
+        Education educationTestClone = educationTest;
+
+
+//        deleteMemo(memoTest);
+//        deleteMemoDate(educationTest);
+
+        asGuestClone = getUserData(asGuestClone.getUserId());
+
+
     }
+
+
+    public boolean updateMemoDate(MemoDate memoDateInput) throws SQLException {
+
+        int type = memoDateInput.getType();
+        String query;
+
+        switch (type){
+            case 2:{
+                query= "UPDATE memo_date " +
+                        "SET " +
+                        "title = '" + memoDateInput.getTitle() + "', " +
+                        "text = '" + memoDateInput.getText() + "', " +
+                        "create_date = '" + memoDateInput.getCreateDate().toString() + "', " +
+                        "last_remind_date = '" + memoDateInput.getLastRemindDate().toString() + "', " +
+                        "next_remind_date = '" + memoDateInput.getNextRemindDate().toString() + "' " +
+                        "WHERE memo_date_id =" + memoDateInput.getMemoId();
+                break;
+            }
+            case 3:{
+                query = "UPDATE memo_date " +
+                        "SET " +
+                        "title = '" + memoDateInput.getTitle() + "', " +
+                        "text = '" + memoDateInput.getText() + "', " +
+                        "create_date = '" + memoDateInput.getCreateDate().toString() + "', " +
+                        "last_remind_date = '" + memoDateInput.getLastRemindDate().toString() + "', " +
+                        "next_remind_date = '" + memoDateInput.getNextRemindDate().toString() + "', " +
+                        "interval = " + ((MemoDaily)memoDateInput).getInterval() + " " +
+                        "WHERE memo_date_id =" + memoDateInput.getMemoId();
+                break;
+            }
+            case 4:{
+                query = "UPDATE memo_date " +
+                        "SET " +
+                        "title = '" + memoDateInput.getTitle() + "', " +
+                        "text = '" + memoDateInput.getText() + "', " +
+                        "create_date = '" + memoDateInput.getCreateDate().toString() + "', " +
+                        "last_remind_date = '" + memoDateInput.getLastRemindDate().toString() + "', " +
+                        "next_remind_date = '" + memoDateInput.getNextRemindDate().toString() + "' " +
+                        "interval = " + ((MemoDaily)memoDateInput).getInterval() + ", " +
+                        "streak = " + ((Education)memoDateInput).getStreak() + " " +
+                        "WHERE memo_date_id =" + memoDateInput.getMemoId();
+                break;
+            }
+            default: {
+                throw new SQLException("Invalid type in memo date update");
+            }
+        }
+
+
+        Statement statement = c.createStatement();
+        int affectedRows = statement.executeUpdate(query);
+
+        if (affectedRows == 0) {
+            throw new SQLException("Could not update memo date:" + memoDateInput.getMemoId());
+        }
+        statement.close();
+        return true;
+    }
+
+
+    public boolean deleteMemoDate(MemoDate memoDateInput) throws SQLException {
+        PreparedStatement statement = c.prepareStatement("DELETE from memo_date WHERE memo_date_id=" + memoDateInput.getMemoId() + ";");
+        int affectedRows = statement.executeUpdate();
+
+        if (affectedRows == 0) {
+            throw new SQLException("Could not insert into AS GUEST");
+        }
+
+        statement.close();
+        return true;
+    }
+
+    public boolean deleteMemoDate(int memoDateIdInput) throws SQLException {
+        PreparedStatement statement = c.prepareStatement("DELETE from memo_date WHERE memo_date_id=" + memoDateIdInput + ";");
+        int affectedRows = statement.executeUpdate();
+
+        if (affectedRows == 0) {
+            throw new SQLException("Could not insert into AS GUEST");
+        }
+
+        statement.close();
+        return true;
+    }
+
+
+    public boolean updateMemo(Memo memoInput) throws SQLException {
+        String query = "UPDATE memo " +
+                "SET " +
+                "title = '" + memoInput.getTitle() + "', " +
+                "text = '" + memoInput.getText() + "', " +
+                "create_date = '" + memoInput.getCreateDate().toString() + "' " +
+                "WHERE memo_id =" + memoInput.getMemoId();
+
+        Statement statement = c.createStatement();
+        int affectedRows = statement.executeUpdate(query);
+
+        if (affectedRows == 0) {
+            throw new SQLException("Could not update memo:" + memoInput.getMemoId());
+        }
+        statement.close();
+        return true;
+    }
+
+
+
+    public boolean deleteMemo(Memo memoInput) throws SQLException {
+        PreparedStatement statement = c.prepareStatement("DELETE from memo WHERE memo_id=" + memoInput.getMemoId() + ";");
+        int affectedRows = statement.executeUpdate();
+
+        if (affectedRows == 0) {
+            throw new SQLException("Could not insert into AS GUEST");
+        }
+
+        statement.close();
+
+
+        return true;
+    }
+
+
+    public boolean deleteMemo(int memoInputId) throws SQLException {
+        PreparedStatement statement = c.prepareStatement("DELETE from memo WHERE memo_id=" + memoInputId + ";");
+        int affectedRows = statement.executeUpdate();
+
+        if (affectedRows == 0) {
+            throw new SQLException("Could not insert into AS GUEST");
+        }
+
+        statement.close();
+
+
+        return true;
+    }
+
+    public boolean updateUserData(User userInput) throws SQLException {
+
+        int isGuestAsInt;
+        if(userInput.isGuest()){
+            isGuestAsInt = 1;
+        }else
+        {
+            isGuestAsInt = 0;
+        }
+
+        String query = "UPDATE user " +
+                "SET " +
+                "first_name = '" + userInput.getFirstName() + "', " +
+                "last_name = '" + userInput.getFirstName() + "', " +
+                "first_name = '" + userInput.getFirstName() + "', " +
+                "age = " + userInput.getAge() + ", " +
+                "gender = '" + userInput.getGender() + "', " +
+                "user_name = '" + userInput.getUserName() + "', " +
+                "e_mail = '" + userInput.getEMail() + "', " +
+                "password = '" + userInput.getPassword() + "', " +
+                "is_guest = " + isGuestAsInt + " " +
+                "WHERE user_id =" + userInput.getUserId();
+
+        Statement statement = c.createStatement();
+        int affectedRows = statement.executeUpdate(query);
+
+        if (affectedRows == 0) {
+            throw new SQLException("Could not update user:" + userInput.getUserId());
+        }
+        statement.close();
+        return true;
+    }
+
+
 
     /**
      * use carefully
@@ -158,8 +363,8 @@ public class DatabaseHandler {
         statement.setString(4, memoDateInput.getCreateDate().toString());
         statement.setString(5, memoDateInput.getLastRemindDate().toString());
         statement.setString(6, memoDateInput.getNextRemindDate().toString());
-        if(type != 2) {
-            if (type == 4) {
+        if(type != Constants.TYPE_MEMO_DATE) {
+            if (type == Constants.TYPE_EDUCATION) {
                 statement.setInt(8, ((Education) memoDateInput).getStreak());
             }
             statement.setInt(7, ((MemoDaily)memoDateInput).getInterval());
