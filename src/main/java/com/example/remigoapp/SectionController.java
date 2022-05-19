@@ -66,13 +66,13 @@ public class SectionController implements Initializable {
     private class CustomListCell extends ListCell<MemoDate> {
         private HBox content;
         private Text name;
-        private Text price;
+        private Text text;
 
         public CustomListCell() {
             super();
             name = new Text();
-            price = new Text();
-            VBox vBox = new VBox(name, price);
+            text = new Text();
+            VBox vBox = new VBox(name, text);
             content = new HBox(vBox);
             content.setSpacing(10);
         }
@@ -82,7 +82,7 @@ public class SectionController implements Initializable {
             super.updateItem(item, empty);
             if (item != null && !empty) { // <== test for null item and empty parameter
                 name.setText(item.getTitle());
-                price.setText(item.getText());
+                text.setText(item.getText());
                 setGraphic(content);
             } else {
                 setGraphic(null);
@@ -102,6 +102,5 @@ public class SectionController implements Initializable {
 
     public void setListView(ObservableList<MemoDate> memoDateData){
         listView.setItems(memoDateData);
-        System.out.println(memoDateData.get(0).getTitle());
     }
 }
