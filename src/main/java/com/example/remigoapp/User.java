@@ -59,6 +59,8 @@ public class User extends Person {
         this.gender = gender;
         this.memoList = memoList;
         this.memoDateList = memoDateList;
+        Variables.memoList = memoList;
+        Variables.memoDateList = memoDateList;
     }
 
     /**

@@ -33,18 +33,19 @@ public class HelloApplication extends Application {
 
         ObservableList<MemoDate> memoDateData =  FXCollections.observableArrayList();
         SectionController sectionController = fxmlLoader.<SectionController>getController();;
-        sectionController.setListView(memoDateData);
 
         appInstance = this;
         databaseHandler = new DatabaseHandler();
 
         user = new User("TestUser", "test@test.com", "testPass", 1,
                 false, "TestFName", "TestLName", 18, "Male");
+
         List<MemoDate> memoDateList = new ArrayList<>();
+
         MemoDate memoDate1 = new Education("TestMemoEdu1", "TestingEdu1",
                 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 1, 1);
         MemoDate memoDate2 = new Education("TestMemoEdu2", "TestingEdu2",
-                1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 0, 0);
+                2, LocalDate.now(), LocalDate.now(), LocalDate.now(), 0, 0);
         memoDateList.add(memoDate1);
         memoDateData.add(memoDate1);
         memoDateList.add(memoDate2);
@@ -55,10 +56,17 @@ public class HelloApplication extends Application {
         manager.startTimer();
         sectionController.setListView(memoDateData);
 
+        Variables.memoDateData = memoDateData;
+        Variables.currentUser = user;
+        Variables.memoDateList = memoDateList;
+        Variables.memoDateData = memoDateData;
+        Variables.manager = manager;
+
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
     }
+
 
     public static void main(String[] args) {
         launch();

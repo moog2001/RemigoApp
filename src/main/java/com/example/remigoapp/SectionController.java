@@ -45,10 +45,14 @@ public class SectionController implements Initializable {
     private TextArea memoText = new TextArea();
 
     private List<MemoDate> memoDateList = new ArrayList<>();
-    ObservableList<MemoDate> memoDateData;
+    private ObservableList<MemoDate> memoDateData;
+    private MemoDate currentMemoDate = new MemoDate();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        memoDateList = Variables.memoDateList;
+        memoDateData = Variables.memoDateData;
 
         listView.setCellFactory(new Callback<ListView<MemoDate>, ListCell<MemoDate>>() {
             @Override
@@ -60,21 +64,45 @@ public class SectionController implements Initializable {
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                MemoDate memoDate = listView.getSelectionModel().getSelectedItem();
-                if(memoDate == null)
+                currentMemoDate = listView.getSelectionModel().getSelectedItem();
+                if(currentMemoDate == null)
                     return;
-                memoTitle.setText(memoDate.getTitle());
-                memoText.setText(memoDate.getText());
-                System.out.println("Clicked on " + memoDate.getText());
+                memoTitle.setText(currentMemoDate.getTitle());
+                memoText.setText(currentMemoDate.getText());
+
+
             }
         });
 
         memoTitle.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(memoDateList.size() <= 0)
+                memoDateList = Variables.memoDateList;
 
-            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+            for(int i = 0; i < memoDateList.size(); i++){
+                if(memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
+                    memoDateList.get(i).setTitle(newValue);
+                    currentMemoDate.setTitle(newValue);
+                    Variables.memoDateList = memoDateList;
+                }
+
+            }
+
         });
 
-        
+        memoText.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(memoDateList.size() <= 0)
+                memoDateList = Variables.memoDateList;
+
+
+            for(int i = 0; i < memoDateList.size(); i++){
+                if(memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
+                    memoDateList.get(i).setText(newValue);
+                    currentMemoDate.setText(newValue);
+                    Variables.memoDateList = memoDateList;
+                }
+            }
+        });
+
     }
     private class CustomListCell extends ListCell<MemoDate> {
         private HBox content;
@@ -104,6 +132,7 @@ public class SectionController implements Initializable {
     }
 
     public void setListView(ObservableList<MemoDate> memoDateData){
+        Variables.memoDateData = memoDateData;
         listView.setItems(memoDateData);
     }
 

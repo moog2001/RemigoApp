@@ -102,7 +102,6 @@ public class DatabaseHandler {
 
         int type = memoDateInput.getType();
         String query;
-
         switch (type){
             case Constants.TYPE_MEMO_DATE:{
                 query= "UPDATE memo_date " +
@@ -421,7 +420,10 @@ public class DatabaseHandler {
         List<Memo> memoList = getMemoList(userId);
         List<MemoDate> memoDateList = getMemoDateList(userId);
 //        List<MemoDate> memoDateList = null;
-        return new User(userName, eMail, password, userId, isGuest, firstName, lastName, age, gender, memoList, memoDateList);
+        User user= new User(userName, eMail, password, userId, isGuest, firstName, lastName, age, gender, memoList, memoDateList);
+
+        Variables.currentUser = user;
+        return user;
 
 
     }
@@ -467,6 +469,7 @@ public class DatabaseHandler {
 
         }
         statement.close();
+        Variables.memoDateList = memoDateList;
         return memoDateList;
     }
 
@@ -490,6 +493,7 @@ public class DatabaseHandler {
             memoList.add(memo);
         }
         statement.close();
+        Variables.memoList = memoList;
         return memoList;
     }
 
