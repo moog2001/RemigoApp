@@ -2,6 +2,7 @@ package com.example.remigoapp;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +19,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 
@@ -36,6 +38,9 @@ public class SectionController implements Initializable {
     private Pane paneBack;
 
     @FXML
+    private DatePicker memoDatePicker;
+
+    @FXML
     private ListView<MemoDate> listView = new ListView<>();
 
     @FXML
@@ -43,6 +48,9 @@ public class SectionController implements Initializable {
 
     @FXML
     private TextArea memoText = new TextArea();
+
+    @FXML
+    private Button addMemoButton;
 
     private List<MemoDate> memoDateList = new ArrayList<>();
     private ObservableList<MemoDate> memoDateData;
@@ -103,6 +111,32 @@ public class SectionController implements Initializable {
             }
         });
 
+        memoDatePicker.setOnAction(event ->{
+            if(currentMemoDate != null)
+                for(int i = 0; i < memoDateList.size(); i++){
+                    if(memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
+                        memoDateList.get(i).setNextRemindDate(memoDatePicker.getValue());
+                        currentMemoDate.setNextRemindDate(memoDatePicker.getValue());
+                        Variables.memoDateList = memoDateList;
+                    }
+                }
+        });
+
+        addMemoButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                MemoDate newMemoDate = new MemoDate();
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+
+                if(memoTitle.getText() == null){
+                    alert.setTitle("Error");
+                }
+
+                newMemoDate.setTitle(memoTitle.getText());
+
+                System.out.println("button clicked");
+            }
+        });
     }
     private class CustomListCell extends ListCell<MemoDate> {
         private HBox content;

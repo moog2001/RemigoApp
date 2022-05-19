@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -50,17 +54,27 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin>
-               <top>
-                  <TextField fx:id="memoTitle" maxWidth="200.0" minHeight="50.0" minWidth="50.0" prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="TOP_LEFT">
-                     <BorderPane.margin>
-                        <Insets left="20.0" top="20.0" />
-                     </BorderPane.margin>
-                  </TextField>
-               </top>
                <center>
                   <TextArea fx:id="memoText" maxHeight="500.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                </center>
+
+               <DatePicker BorderPane.alignment="CENTER" />
+               <top>
+                  <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextField fx:id="memoTitle" maxWidth="200.0" minHeight="50.0" minWidth="50.0" prefHeight="65.0" prefWidth="174.0" promptText="Memo title" />
+                        <DatePicker fx:id="memoDatePicker" promptText="MM-DD-YYYY" showWeekNumbers="true">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </DatePicker>
+                        <Button fx:id="addMemoButton" mnemonicParsing="false" text="Add Memo" />
+                     </children>
+                  </HBox>
+               </top>
+
             </BorderPane>
          </children></VBox>
+      <ToggleButton mnemonicParsing="false" text="ToggleButton" />
    </children>
 </HBox>
