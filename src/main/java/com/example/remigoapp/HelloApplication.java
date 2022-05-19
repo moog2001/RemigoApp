@@ -28,12 +28,13 @@ public class HelloApplication extends Application {
         user = new User("TestUser", "test@test.com", "testPass", 1,
                 false, "TestFName", "TestLName", 18, "Male");
         List<MemoDate> memoDateList = new ArrayList<>();
-        MemoDate memoDate = new Education("TestMemoEdu", "TestingEdu", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 1, 1);
+        MemoDate memoDate = new Education("TestMemoEdu", "TestingEdu",
+                1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 1, 1);
         memoDateList.add(memoDate);
 
         user.setMemoDateList(memoDateList);
         manager = new Manager(user);
-        manager.startTimer();
+       // manager.startTimer();
 
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login_view.fxml"));
@@ -41,7 +42,7 @@ public class HelloApplication extends Application {
             stage.setTitle("Hello!");
             stage.setScene(scene);
             stage.show();
-        }
+    }
 
     
 
