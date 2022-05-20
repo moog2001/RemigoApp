@@ -67,7 +67,9 @@
                               <Cursor fx:constant="DEFAULT" />
                            </cursor>
                         </DatePicker>
-                        <Button fx:id="addMemoButton" mnemonicParsing="false" prefWidth="146.0" text="Add Memo" />
+                        <Button fx:id="addMemoButton" mnemonicParsing="false" prefWidth="76.0" text="Add Memo" />
+                        <Button mnemonicParsing="false" text="Button" />
+                        <Button fx:id="updateMemoButton" mnemonicParsing="false" text="Button" />
                      </children>
                   </HBox>
                </top>
