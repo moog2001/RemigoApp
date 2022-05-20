@@ -57,13 +57,16 @@ public class Manager {
     /**
      * Starts application in As Guest
      */
-    private void setUpAsGuest() {
+    private void setUpAsGuest() throws SQLException {
 
+        User asGuestUser;
+        asGuestUser = databaseHandler.getUserData("AS GUEST user name");
+        if(asGuestUser == null) {
+            asGuestUser = createUser("AS GUEST user name", "ASGUEST@email.com", "AS GUEST password", false, "AS", "GUEST", Constants.NULL_INT, "MALE");
+        }
+        Variables.setCurrentUserData(asGuestUser);
     }
 
-//    private User createAsGuestUser(){
-//
-//    }
 
     /**
      * create a User in the application and return the object.
