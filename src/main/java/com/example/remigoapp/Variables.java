@@ -60,8 +60,15 @@ public class Variables {
         return currentUser;
     }
 
-    public static void setCurrentUser(User currentUser) {
+    /**
+     * sets current user and lists in it.
+     * @author Moog
+     * @param currentUser
+     */
+    public static void setCurrentUserData(User currentUser) {
         Variables.currentUser = currentUser;
+        Variables.memoDateList = currentUser.getMemoDateList();
+        Variables.memoList = currentUser.getMemoList();
     }
 
     public static Manager getManager() {

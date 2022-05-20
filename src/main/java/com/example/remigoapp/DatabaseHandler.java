@@ -466,10 +466,10 @@ public class DatabaseHandler {
 
     public User getUserData(String userName) throws SQLException {
         Statement statement = c.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from user where user_name=" + userName);
+        ResultSet resultSet = statement.executeQuery("select * from user where user_name='" + userName+ "'");
         if (!resultSet.next()) {
-            throw new SQLException("No user found with username: " + userName);
-//            return null;
+//            throw new SQLException("No user found with username: " + userName);
+            return null;
         }
         int userId = resultSet.getInt(1);
         String firstName = resultSet.getString(2);
