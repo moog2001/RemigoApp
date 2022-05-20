@@ -184,7 +184,7 @@ public class Manager {
     private void notifyUser(int remindCount) {
 
         Notifications notificationBuilder = Notifications.create()
-                .title("You have notifications")
+                .title("You have " + remindCount + " notifications")
                 .text("Click here to see them")
                 .graphic(null)
                 .hideAfter(Duration.seconds(5))

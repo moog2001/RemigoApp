@@ -121,12 +121,26 @@ public class SectionController implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 MemoDate newMemoDate = new MemoDate();
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-
+                alert.setTitle("Wrong Input");
                 if(memoTitle.getText() == ""){
-                    alert.setTitle("Error");
+                    alert.setContentText("Invalid Memo_Title");
                     alert.showAndWait();
                     return;
                 }
+
+                if(memoText.getText() == ""){
+                    alert.setContentText("Invalid Memo_Text");
+                    alert.showAndWait();
+                    return;
+                }
+
+                if(memoDatePicker.getValue() == null){
+                    alert.setContentText("Invalid Memo_Date");
+                    alert.showAndWait();
+                    return;
+                }
+
+
 
                 if( manager == null)
                     manager = Variables.manager;
@@ -157,6 +171,38 @@ public class SectionController implements Initializable {
                 String newTitleValue = memoTitle.getText();
                 String newTextValue = memoText.getText();
                 LocalDate newDateValue = memoDatePicker.getValue();
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Wrong Input");
+
+                if(memoTitle.getText() == ""){
+                    alert.setContentText("Invalid Memo_Title");
+                    alert.showAndWait();
+                    return;
+                }
+
+                if(memoText.getText() == ""){
+                    alert.setContentText("Invalid Memo_Text");
+                    alert.showAndWait();
+                    return;
+                }
+
+                if(memoDatePicker.getValue() == null){
+                    alert.setContentText("Invalid Memo_Date");
+                    alert.showAndWait();
+                    return;
+                }
+
+                if(memoDatePicker.getValue() == null){
+                    alert.setContentText("Invalid Memo_Date");
+                    alert.showAndWait();
+                    return;
+                }
+
+                if(currentMemoDate == null){
+                    alert.setContentText("Select memo date");
+                    alert.showAndWait();
+                    return;
+                }
 
                 if(memoDateList.size() <= 0)
                     memoDateList = Variables.memoDateList;

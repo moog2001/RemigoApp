@@ -10,5 +10,6 @@ public class Constants {
     static final public String JCDB_CLASS = "org.sqlite.JDBC";
     static final public int CHECK_INTERVAL = 5 * 1000;
     static final public int NULL_INT = -247;
+    static final public String DATE_PATTERN = "dd/MM/yyyy";
     
 }
