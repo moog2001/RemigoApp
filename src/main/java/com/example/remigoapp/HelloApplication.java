@@ -44,23 +44,22 @@ public class HelloApplication extends Application {
 
         List<MemoDate> memoDateList = new ArrayList<>();
 
-        MemoDate memoDate1 = new Education("TestMemoEdu1", "TestingEdu1",
-                1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 1, 1);
-        MemoDate memoDate2 = new Education("TestMemoEdu2", "TestingEdu2",
-                2, LocalDate.now(), LocalDate.now(), LocalDate.now(), 0, 0);
-        memoDateList.add(memoDate1);
-        memoDateData.add(memoDate1);
-        memoDateList.add(memoDate2);
-        memoDateData.add(memoDate2);
-
+//        MemoDate memoDate1 = new Education("TestMemoEdu1", "TestingEdu1",
+//                1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 1, 1);
+//        MemoDate memoDate2 = new Education("TestMemoEdu2", "TestingEdu2",
+//                2, LocalDate.now(), LocalDate.now(), LocalDate.now(), 0, 0);
+//        memoDateList.add(memoDate1);
+//        memoDateData.add(memoDate1);
+//        memoDateList.add(memoDate2);
+//        memoDateData.add(memoDate2);
+        Variables.memoDateList = memoDateList;
+        Variables.memoDateData = memoDateData;
         user.setMemoDateList(memoDateList);
         manager = new Manager();
         sectionController.setListView(memoDateData);
 
-        Variables.memoDateData = memoDateData;
+
         Variables.currentUser = user;
-        Variables.memoDateList = memoDateList;
-        Variables.memoDateData = memoDateData;
         Variables.manager = manager;
 
         stage.setTitle("Hello!");
