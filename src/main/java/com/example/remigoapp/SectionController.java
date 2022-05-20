@@ -116,8 +116,7 @@ public class SectionController implements Initializable {
                 newMemoDate.setMemoId(generateMemoId());
 
                 Manager manager = Variables.getManager();
-//                manager.crea
-//                     databaseHandler.createMemoDate(memoTitle.getText(), memoText.getText(), LocalDate.now()))
+                //manager.createMemoDate(memoTitle.getText(), memoText.getText(), LocalDate.now(), LocalDate.now(),memoDatePicker.getValue(), Variables.currentUser);
 
 
                 memoDateList.add(newMemoDate);
