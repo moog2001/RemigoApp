@@ -169,19 +169,18 @@ public class SectionController implements Initializable {
                         if( databaseHandler == null)
                             databaseHandler = Variables.databaseHandler;
 
-                        try {
-                            databaseHandler.deleteMemoDate(memoDateList.get(i).getMemoId());
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            databaseHandler.deleteMemoDate(memoDateList.get(i).getMemoId());
+//                        } catch (SQLException e) {
+//                            e.printStackTrace();
+//                        }
 
                         memoDateList.remove(i);
                         memoDateData.remove(i);
-                        break;
+                        i = memoDateList.size();
                     }
                 }
                 clearText();
-
                 setListView(memoDateData);
             }
         });
