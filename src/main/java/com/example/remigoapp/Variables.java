@@ -69,6 +69,10 @@ public class Variables {
         Variables.currentUser = currentUser;
         Variables.memoDateList = currentUser.getMemoDateList();
         Variables.memoList = currentUser.getMemoList();
+        if(memoDateList == null)
+            memoDateList = new ArrayList<MemoDate>();
+        if(memoList == null)
+            memoList = new ArrayList<Memo>();
     }
 
     public static Manager getManager() {

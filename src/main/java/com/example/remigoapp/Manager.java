@@ -25,7 +25,7 @@ import java.util.*;
 public class Manager {
     private User currentUser = new User();
     private Timer checkNewRemind = new Timer();
-    private List<MemoDate> memoDateList;
+    private List<MemoDate> memoDateList = new ArrayList<>();
     private List<MemoDate> remindTodayList = new ArrayList<>();
     private DatabaseHandler databaseHandler;
 
@@ -49,7 +49,7 @@ public class Manager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //startTimer();
+        startTimer();
 //        setUpAsGuest();
     }
 
@@ -57,8 +57,13 @@ public class Manager {
      * Starts application in As Guest
      */
     private void setUpAsGuest() throws SQLException {
-        User asGuestUser = createUser("AS GUEST username", "ASGUEST@email.com", "AS GUEST password",false,"AS", "GUEST", Constants.NULL_INT,"MALE");
+        User asGuestUser = databaseHandler.getUserData("AS GUEST username");
+        if(asGuestUser == null)
+            asGuestUser = createUser("AS GUEST username", "ASGUEST@email.com", "AS GUEST password",false,"AS", "GUEST", Constants.NULL_INT,"MALE");
         Variables.setCurrentUserData(asGuestUser);
+        memoDateList = asGuestUser.getMemoDateList();
+        if(memoDateList == null)
+            memoDateList = new ArrayList<MemoDate>();
         for(int i = 0; i < memoDateList.size(); i++){
             Variables.memoDateData.add(memoDateList.get(i));
         }
