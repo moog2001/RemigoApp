@@ -51,12 +51,7 @@ public class Manager {
         }
 
         startTimer();
-//        try {
-//            databaseHandler.resetDatabaseData("agreed");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        setUpAsGuest();
+
     }
 
     /**

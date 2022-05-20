@@ -501,41 +501,45 @@ public class DatabaseHandler {
         List<MemoDate> memoDateList = new ArrayList<>();
         Statement statement = c.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from user_memo_date where user_id=" + userIdInput);
-        if (!resultSet.next()) {
-            return null;
-        }
-        int memoDateId = resultSet.getInt(3);
-        resultSet = statement.executeQuery("select * from memo_date where memo_date_id=" + memoDateId);
+        List<Integer> memoDateIdList = new ArrayList<>();
         while (resultSet.next()) {
-            int type = resultSet.getInt(2);
-            String title = resultSet.getString(3);
-            String text = resultSet.getString(4);
-            LocalDate createDate = LocalDate.parse(resultSet.getString(5));
-            LocalDate lastRemindDate = LocalDate.parse(resultSet.getString(6));
-            LocalDate nextRemindDate = LocalDate.parse(resultSet.getString(7));
-            int interval = Constants.NULL_INT; // default null value
-            MemoDate memoDate;
-            switch (type) {
-                case 2: {
-                    memoDate = new MemoDate(title, text, memoDateId, createDate, lastRemindDate, nextRemindDate);
-                    memoDateList.add(memoDate);
-                    break;
-                }
-                case 3: {
-                    interval = resultSet.getInt(8);
-                    memoDate = new MemoDaily(title, text, memoDateId, createDate, lastRemindDate, nextRemindDate, interval);
-                    memoDateList.add(memoDate);
-                    break;
-                }
-                case 4: {
-                    int streak = resultSet.getInt(9);
-                    memoDate = new Education(title, text, memoDateId, createDate, lastRemindDate, nextRemindDate, interval, streak);
-                    memoDateList.add(memoDate);
-                    break;
+            memoDateIdList.add(resultSet.getInt("memo_date_id"));
+        }
+
+        for (int i = 0; i < memoDateIdList.size(); i++) {
+            int memoDateId = memoDateIdList.get(i);
+            ResultSet resultSetInner = statement.executeQuery("select * from memo_date where memo_date_id=" + memoDateId);
+            if (resultSetInner.next()) {
+                int type = resultSet.getInt(2);
+                String title = resultSet.getString(3);
+                String text = resultSet.getString(4);
+                LocalDate createDate = LocalDate.parse(resultSet.getString(5));
+                LocalDate lastRemindDate = LocalDate.parse(resultSet.getString(6));
+                LocalDate nextRemindDate = LocalDate.parse(resultSet.getString(7));
+                int interval = Constants.NULL_INT; // default null value
+                MemoDate memoDate;
+                switch (type) {
+                    case 2: {
+                        memoDate = new MemoDate(title, text, memoDateId, createDate, lastRemindDate, nextRemindDate);
+                        memoDateList.add(memoDate);
+                        break;
+                    }
+                    case 3: {
+                        interval = resultSet.getInt(8);
+                        memoDate = new MemoDaily(title, text, memoDateId, createDate, lastRemindDate, nextRemindDate, interval);
+                        memoDateList.add(memoDate);
+                        break;
+                    }
+                    case 4: {
+                        int streak = resultSet.getInt(9);
+                        memoDate = new Education(title, text, memoDateId, createDate, lastRemindDate, nextRemindDate, interval, streak);
+                        memoDateList.add(memoDate);
+                        break;
+                    }
                 }
             }
-
         }
+
         statement.close();
         return memoDateList;
     }
