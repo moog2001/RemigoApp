@@ -20,7 +20,7 @@ public class DatabaseHandler {
         Statement statement = c.createStatement();
         statement.executeUpdate("PRAGMA foreign_keys = ON"); // this line allows cascade delete on the sql database
 
-        
+
 
 //        resetDatabaseData("agreed");
 //        resetAsGuest();
@@ -100,7 +100,12 @@ public class DatabaseHandler {
 
     }
 
-
+    /**
+     * notify update to the database and save
+     * @param memoDateInput
+     * @return
+     * @throws SQLException
+     */
     public boolean updateMemoDate(MemoDate memoDateInput) throws SQLException {
 
         int type = memoDateInput.getType();
@@ -159,7 +164,12 @@ public class DatabaseHandler {
         return true;
     }
 
-
+    /**
+     * notify delete to the database and save it there
+     * @param memoDateInput
+     * @return
+     * @throws SQLException
+     */
     public boolean deleteMemoDate(MemoDate memoDateInput) throws SQLException {
         PreparedStatement statement = c.prepareStatement("DELETE from memo_date WHERE memo_date_id=" + memoDateInput.getMemoId() + ";");
         int affectedRows = statement.executeUpdate();
@@ -172,6 +182,12 @@ public class DatabaseHandler {
         return true;
     }
 
+    /**
+     * notify delete to the database and save it there
+     * @param memoDateIdInput
+     * @return
+     * @throws SQLException
+     */
     public boolean deleteMemoDate(int memoDateIdInput) throws SQLException {
         PreparedStatement statement = c.prepareStatement("DELETE from memo_date WHERE memo_date_id=" + memoDateIdInput + ";");
         int affectedRows = statement.executeUpdate();
@@ -184,7 +200,12 @@ public class DatabaseHandler {
         return true;
     }
 
-
+    /**
+     * notify update to the database and save it there
+     * @param memoInput
+     * @return
+     * @throws SQLException
+     */
     public boolean updateMemo(Memo memoInput) throws SQLException {
         String query = "UPDATE memo " +
                 "SET " +
@@ -204,7 +225,12 @@ public class DatabaseHandler {
     }
 
 
-
+    /**
+     * notify delete to the database and save it there
+     * @param memoInput
+     * @return
+     * @throws SQLException
+     */
     public boolean deleteMemo(Memo memoInput) throws SQLException {
         PreparedStatement statement = c.prepareStatement("DELETE from memo WHERE memo_id=" + memoInput.getMemoId() + ";");
         int affectedRows = statement.executeUpdate();
@@ -219,7 +245,12 @@ public class DatabaseHandler {
         return true;
     }
 
-
+    /**
+     * notify delete to the database and save it there
+     * @param memoInputId
+     * @return
+     * @throws SQLException
+     */
     public boolean deleteMemo(int memoInputId) throws SQLException {
         PreparedStatement statement = c.prepareStatement("DELETE from memo WHERE memo_id=" + memoInputId + ";");
         int affectedRows = statement.executeUpdate();
@@ -234,6 +265,12 @@ public class DatabaseHandler {
         return true;
     }
 
+    /**
+     * notify update to the database and save it there
+     * @param userInput
+     * @return
+     * @throws SQLException
+     */
     public boolean updateUserData(User userInput) throws SQLException {
 
         int isGuestAsInt;
@@ -265,8 +302,6 @@ public class DatabaseHandler {
         statement.close();
         return true;
     }
-
-
 
     /**
      * use carefully
@@ -354,7 +389,13 @@ public class DatabaseHandler {
         return memoId;
     }
 
-
+    /**
+     * creates MemoDate in the database
+     * @param memoDateInput
+     * @param userIdInput
+     * @return id of the MemoDate object
+     * @throws SQLException
+     */
     public int createMemoDate(MemoDate memoDateInput, int userIdInput) throws SQLException {
         PreparedStatement statement = c.prepareStatement("INSERT INTO memo_date(type,title,text,create_date,last_remind_date,next_remind_date,interval,streak,user_id) Values(?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
@@ -386,25 +427,12 @@ public class DatabaseHandler {
         return memoId;
     }
 
-//
-//    private int createUserMemo(int userIdInput, int memoIdInput) throws SQLException {
-//        PreparedStatement statement = c.prepareStatement("INSERT INTO user_memo Values(?, ?)", Statement.RETURN_GENERATED_KEYS);
-//        statement.setInt(1, userIdInput);
-//        statement.setInt(2, memoIdInput);
-//
-//        int affectedRows = statement.executeUpdate();
-//        if(affectedRows == 0){
-//            throw new SQLException("Count not insert into user_memo");
-//        }
-//
-//        ResultSet resultSet = statement.getGeneratedKeys();
-//        if(!resultSet.next()){
-//            throw new SQLException("could not get generated keys from user_memo");
-//        }
-//        return resultSet.getInt(1);
-//
-//    };
-
+    /**
+     * returns the User object
+     * @param userIdInput user id
+     * @return
+     * @throws SQLException
+     */
     public User getUserData(int userIdInput) throws SQLException {
         Statement statement = c.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from user where user_id=" + userIdInput);
@@ -429,6 +457,12 @@ public class DatabaseHandler {
 
     }
 
+    /**
+     * returns the MemoDate List of the User
+     * @param userIdInput user id
+     * @return
+     * @throws SQLException
+     */
     public List<MemoDate> getMemoDateList(int userIdInput) throws SQLException {
 
         List<MemoDate> memoDateList = new ArrayList<>();
@@ -473,7 +507,12 @@ public class DatabaseHandler {
         return memoDateList;
     }
 
-
+    /**
+     * returns the Memo List of the User
+     * @param userIdInput user id
+     * @return
+     * @throws SQLException
+     */
     public List<Memo> getMemoList(int userIdInput) throws SQLException {
 
         List<Memo> memoList = new ArrayList<>();
@@ -495,6 +534,5 @@ public class DatabaseHandler {
         statement.close();
         return memoList;
     }
-
 
 }
