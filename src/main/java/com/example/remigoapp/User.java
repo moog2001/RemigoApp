@@ -119,6 +119,54 @@ public class User extends Person {
         return memoDateList;
     }
 
+    /**
+     * returns only memo date list from memo list;
+     * @author Moog
+     * @return
+     */
+    public List<MemoDate> getMemoDateListSingle() {
+        List<MemoDate> list = new ArrayList<>();
+        memoDateList.forEach(memoDate -> {
+            if(!(memoDate instanceof MemoDaily)){
+                list.add(memoDate);
+            }
+        });
+        return list;
+    }
+
+    /**
+     * returns only memo daily list from memo list;
+     * @author Moog
+     * @return
+     */
+    public List<MemoDaily> getMemoDailyList() {
+        List<MemoDaily> list = new ArrayList<>();
+        memoDateList.forEach(memoDaily -> {
+            if(!(memoDaily instanceof Education) && (memoDaily instanceof MemoDaily)){
+                list.add((MemoDaily) memoDaily);
+            }
+        });
+        return list;
+    }
+
+    /**
+     * returns only education list from memo list;
+     * @author Moog
+     * @return
+     */
+    public List<Education> getEducation() {
+        List<Education> list = new ArrayList<>();
+        memoDateList.forEach(education -> {
+            if((education instanceof Education)){
+                list.add((Education) education);
+            }
+        });
+        return list;
+    }
+
+
+
+
     public void setMemoDateList(List<MemoDate> memoDateList) {
         this.memoDateList = memoDateList;
     }

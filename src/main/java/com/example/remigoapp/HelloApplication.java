@@ -23,48 +23,84 @@ public class HelloApplication extends Application {
     public Manager manager;
     User user;
     DatabaseHandler databaseHandler;
+    Stage currentStage;
+    Stage loginStage;
+    Stage folderStage;
+    Stage sectionStage;
 
 
     @Override
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
-
-        Variables.setHelloApplication(this);
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("section_view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-
-        ObservableList<MemoDate> memoDateData =  FXCollections.observableArrayList();
-        SectionController sectionController = fxmlLoader.<SectionController>getController();;
-
         databaseHandler = new DatabaseHandler();
+        Variables.setHelloApplication(this);
         Variables.setDatabaseHandler(databaseHandler);
 
-        user = new User("TestUser", "test@test.com", "testPass", 1,
-                false, "TestFName", "TestLName", 18, "Male");
+        currentStage = stage;
+        FXMLLoader fxmlLoaderLoginView = new FXMLLoader(HelloApplication.class.getResource("login_view.fxml"));
+        LoginController loginController = fxmlLoaderLoginView.getController();
+        Scene sceneLogin = new Scene(fxmlLoaderLoginView.load());
+        loginStage = new Stage();
+        loginStage.setTitle("Login");
+        loginStage.setScene(sceneLogin);
+        FXMLLoader fxmlLoaderFolderView = new FXMLLoader(HelloApplication.class.getResource("folder_view.fxml"));
+        FolderController folderController = fxmlLoaderFolderView.getController();
+        Scene sceneFolder = new Scene(fxmlLoaderFolderView.load());
+        folderStage = new Stage();
+        folderStage.setTitle("Folders");
+        folderStage.setScene(sceneFolder);
+        FXMLLoader fxmlLoaderSectionView = new FXMLLoader(HelloApplication.class.getResource("section_view.fxml"));
+        SectionController sectionController = fxmlLoaderSectionView.getController();
+        Scene sceneSection = new Scene(fxmlLoaderSectionView.load());
+        sectionStage = new Stage();
+        sectionStage.setTitle("Section");
+        sectionStage.setScene(sceneSection);
 
-        List<MemoDate> memoDateList = new ArrayList<>();
+        manager = new Manager();
+        manager.start();
 
-        MemoDate memoDate1 = new Education("TestMemoEdu1", "TestingEdu1",
-                1, LocalDate.now(), LocalDate.now(), LocalDate.now(), 1, 1);
-        MemoDate memoDate2 = new Education("TestMemoEdu2", "TestingEdu2",
-                2, LocalDate.now(), LocalDate.now(), LocalDate.now(), 0, 0);
-        memoDateList.add(memoDate1);
-        memoDateData.add(memoDate1);
-        memoDateList.add(memoDate2);
-        memoDateData.add(memoDate2);
+        startLoginView();
+    }
 
-        user.setMemoDateList(memoDateList);
-        manager = new Manager(user);
-        sectionController.setListView(memoDateData);
+    /**
+     * @return
+     * @throws IOException
+     * @author Moog
+     */
+    public boolean startLoginView() {
+        if (currentStage != null) {
+            currentStage.close();
+        }
+        currentStage = loginStage;
+        loginStage.show();
+        return true;
+    }
 
-        Variables.memoDateData = memoDateData;
-        Variables.currentUser = user;
-        Variables.memoDateList = memoDateList;
-        Variables.memoDateData = memoDateData;
-        Variables.manager = manager;
+    /**
+     * @return
+     * @throws IOException
+     * @author Moog
+     */
+    public boolean startFolderView() {
+        if (currentStage != null) {
+            currentStage.close();
+        }
+        currentStage = folderStage;
+        folderStage.show();
+        return true;
+    }
 
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+    /**
+     * @return
+     * @throws IOException
+     * @author Moog
+     */
+    public boolean startSectionView() {
+        if (currentStage != null) {
+            currentStage.close();
+        }
+        currentStage = sectionStage;
+        sectionStage.show();
+        return true;
     }
 
 

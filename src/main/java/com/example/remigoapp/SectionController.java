@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -60,9 +61,11 @@ public class SectionController implements Initializable {
     private ObservableList<MemoDate> memoDateData;
     private MemoDate currentMemoDate = new MemoDate();
     private DatabaseHandler databaseHandler;
+    HelloApplication helloApplication;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        helloApplication = Variables.getHelloApplication();
         databaseHandler = Variables.getDatabaseHandler();
         memoDateList = Variables.memoDateList;
         memoDateData = Variables.memoDateData;
@@ -207,8 +210,8 @@ public class SectionController implements Initializable {
     }
 
     @FXML
-    void onClickPaneBack(MouseEvent event) {
-
+    void onClickPaneBack(MouseEvent event) throws IOException {
+        helloApplication.startFolderView();
     }
 
 }

@@ -7,6 +7,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 
+import java.io.IOException;
+
 public class LoginController {
 
     @FXML
@@ -30,9 +32,16 @@ public class LoginController {
     @FXML
     private TextField tfUsername;
 
-    @FXML
-    void onClickBtnAsGuest(MouseEvent event) {
+    HelloApplication helloApplication;
 
+    @FXML
+    public void initialize() {
+        helloApplication = Variables.getHelloApplication();
+    }
+
+    @FXML
+    void onClickBtnAsGuest(MouseEvent event) throws IOException {
+        helloApplication.startFolderView();
     }
 
     @FXML
