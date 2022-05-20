@@ -50,13 +50,20 @@ public class SectionController implements Initializable {
     @FXML
     private Button addMemoButton;
 
+    @FXML
+    private Button updateMemoButton;
+
+    @FXML
+    private Button deleteMemoButton;
+
     private List<MemoDate> memoDateList = new ArrayList<>();
     private ObservableList<MemoDate> memoDateData;
     private MemoDate currentMemoDate = new MemoDate();
+    private DatabaseHandler databaseHandler;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        databaseHandler = Variables.getDatabaseHandler();
         memoDateList = Variables.memoDateList;
         memoDateData = Variables.memoDateData;
 
@@ -75,37 +82,8 @@ public class SectionController implements Initializable {
                     return;
                 memoTitle.setText(currentMemoDate.getTitle());
                 memoText.setText(currentMemoDate.getText());
-               
-
-            }
-        });
-
-        memoTitle.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(memoDateList.size() <= 0)
-                memoDateList = Variables.memoDateList;
-
-            for(int i = 0; i < memoDateList.size(); i++){
-                if(memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
-                    memoDateList.get(i).setTitle(newValue);
-                    currentMemoDate.setTitle(newValue);
-                    Variables.memoDateList = memoDateList;
-                }
-
-            }
-
-        });
-
-        memoText.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(memoDateList.size() <= 0)
-                memoDateList = Variables.memoDateList;
 
 
-            for(int i = 0; i < memoDateList.size(); i++){
-                if(memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
-                    memoDateList.get(i).setText(newValue);
-                    currentMemoDate.setText(newValue);
-                    Variables.memoDateList = memoDateList;
-                }
             }
         });
 
@@ -115,7 +93,6 @@ public class SectionController implements Initializable {
                     if(memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
                         memoDateList.get(i).setNextRemindDate(memoDatePicker.getValue());
                         currentMemoDate.setNextRemindDate(memoDatePicker.getValue());
-                        Variables.memoDateList = memoDateList;
                     }
                 }
         });
@@ -138,14 +115,42 @@ public class SectionController implements Initializable {
                 newMemoDate.setNextRemindDate(memoDatePicker.getValue());
                 newMemoDate.setMemoId(generateMemoId());
 
+                Manager manager = Variables.getManager();
+//                manager.crea
+//                     databaseHandler.createMemoDate(memoTitle.getText(), memoText.getText(), LocalDate.now()))
+
+
                 memoDateList.add(newMemoDate);
-                Variables.memoDateList = memoDateList;
+
                 if(memoDateData == null)
                     memoDateData = Variables.memoDateData;
                 memoDateData.add(newMemoDate);
                 setListView(memoDateData);
                 clearText();
             }
+        });
+
+        updateMemoButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String newTitleValue = memoTitle.getText();
+                String newTextValue = memoText.getText();
+                LocalDate newDateValue = memoDatePicker.getValue();
+
+                if(memoDateList.size() <= 0)
+                    memoDateList = Variables.memoDateList;
+
+                for(int i = 0; i < memoDateList.size(); i++){
+                    if(memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
+                        memoDateList.get(i).setTitle(newTitleValue);
+                        memoDateList.get(i).setText(newTextValue);
+                        memoDateList.get(i).setNextRemindDate(newDateValue);
+                        currentMemoDate = memoDateList.get(i);
+                    }
+                }
+
+            }
+
         });
     }
     private class CustomListCell extends ListCell<MemoDate> {
@@ -176,7 +181,6 @@ public class SectionController implements Initializable {
     }
 
     public void setListView(ObservableList<MemoDate> memoDateData){
-        Variables.memoDateData = memoDateData;
         listView.setItems(memoDateData);
     }
 
