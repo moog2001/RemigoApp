@@ -1,7 +1,7 @@
 /**
  * @author Ganbayar Sumiyakhuu
  * Date:5/18/2022
- *
+ * <p>
  * Description of code:
  * This class checks the reminder date of MemoDaily, MemoDate, Education and notify the user.
  * currnetUser: current session of the user's User
@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -26,18 +27,121 @@ public class Manager {
     private Timer checkNewRemind = new Timer();
     private List<MemoDate> memoDateList;
     private List<MemoDate> remindTodayList = new ArrayList<>();
+    private DatabaseHandler databaseHandler;
 
 
     public Manager(User currentUser) {
         this.currentUser = currentUser;
         this.memoDateList = currentUser.getMemoDateList();
+        start();
     }
 
-    public Manager(){
+    public Manager() {
         this.currentUser = Variables.currentUser;
         this.memoDateList = Variables.memoDateList;
         this.remindTodayList = Variables.remindTodayList;
-    };
+        start();
+    }
+
+    ;
+
+    /**
+     * @author Moog
+     * starts manager process
+     */
+    public void start() {
+        databaseHandler = Variables.getDatabaseHandler();
+//        startTimer();
+//        setUpAsGuest();
+    }
+
+    /**
+     * Starts application in As Guest
+     */
+    private void setUpAsGuest() {
+
+    }
+
+//    private User createAsGuestUser(){
+//
+//    }
+
+    /**
+     * create a User in the application and return the object.
+     *
+     * @return
+     * @throws SQLException
+     */
+    private User createUser(String userName, String eMail, String password, boolean isGuest,
+                            String firstName, String lastName, int age, String gender) throws SQLException {
+        User user = new User(userName, eMail, password, Constants.NULL_INT, isGuest,
+                firstName, lastName, age, gender);
+        int userId = databaseHandler.createUser(user);
+        user.setUserId(userId);
+        return user;
+    }
+
+    /**
+     * create a Memo in the application
+     * @author Moog
+     * @param userInput
+     * @return memo
+     * @throws SQLException
+     */
+    private Memo createMemo(String title, String text, LocalDate createDate, User userInput) throws SQLException {
+        Memo memo = new Memo(title, text, Constants.NULL_INT, createDate);
+        int memoId = databaseHandler.createMemo(memo, userInput.getUserId());
+        memo.setMemoId(memoId);
+        userInput.getMemoList().add(memo);
+        return memo;
+    }
+
+    /**
+     * create a MemoDate in the application
+     * @return
+     */
+    private MemoDate createMemoDate(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate, LocalDate nextRemindDate, User userInput) throws SQLException {
+        MemoDate memoDate = new MemoDate(title, text, Constants.NULL_INT, createDate, lastRemindDate, nextRemindDate);
+        int memoDateId = databaseHandler.createMemoDate(memoDate, userInput.getUserId());
+        memoDate.setMemoId(memoDateId);
+        userInput.getMemoDateList().add(memoDate);
+        return memoDate;
+    }
+
+    /**
+     * create a MemoDAily in the application
+     * @return
+     */
+    private MemoDaily createMemoDaily(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate,
+                                      LocalDate nextRemindDate, int interval, User userInput) throws SQLException {
+        MemoDaily memoDaily = new MemoDaily(title, text, Constants.NULL_INT ,  createDate, lastRemindDate, nextRemindDate, interval);
+        int memoDailyId = databaseHandler.createMemoDate(memoDaily, userInput.getUserId());
+        memoDaily.setMemoId(memoDailyId);
+        userInput.getMemoDateList().add(memoDaily);
+        return memoDaily;
+    }
+
+    /**
+     * create a Education in the application
+     * @return
+     */
+    private Education createEducation(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate,
+                                      LocalDate nextRemindDate, int interval, int streak, User userInput) throws SQLException {
+        Education education = new Education(title,  text, Constants.NULL_INT, createDate,  lastRemindDate,
+                nextRemindDate, interval, streak);
+        int educationId = databaseHandler.createMemoDate(education, userInput.getUserId());
+        return education;
+    }
+
+    /**
+     * reset User object with data from the database
+     * @author Moog
+     * @return
+     */
+    private User resetUser(User userInput) throws SQLException {
+        userInput = databaseHandler.getUserData(userInput.getUserId());
+        return userInput;
+    }
 
     /**
      * checkNewRemind Timer's checkRemind TimerTask
@@ -56,19 +160,19 @@ public class Manager {
      * class updateRemindToday() method starts Fixed Rate Timer.
      * Schedule of the Timer is Constants.CHECK_INTERVAL starts without delay
      */
-    public void startTimer(){
-        if(memoDateList.size() <= 0)
-            memoDateList = Variables.memoDateList;
-
-        updateRemindToday();
-        checkNewRemind.scheduleAtFixedRate(checkRemind, 0, Constants.CHECK_INTERVAL);
-    }
+//    public void startTimer() {
+//        if (memoDateList.size() <= 0)
+//            memoDateList = Variables.memoDateList;
+//
+//        updateRemindToday();
+//        checkNewRemind.scheduleAtFixedRate(checkRemind, 0, Constants.CHECK_INTERVAL);
+//    }
 
     /**
      * This method send notification to the user. This sends how many notification currently user has.
      * @param remindCount
      */
-    private void notifyUser(int remindCount){
+    private void notifyUser(int remindCount) {
 
         Notifications notificationBuilder = Notifications.create()
                 .title("You have " + remindCount + " notifications")
@@ -82,7 +186,7 @@ public class Manager {
 
                     }
                 });
-        Platform.runLater(()->notificationBuilder.showWarning() );
+        Platform.runLater(() -> notificationBuilder.showWarning());
 
     }
 
@@ -91,12 +195,12 @@ public class Manager {
      * if today doesn't have anything to remind the method ends returns false.
      * if today has something to remind it calls notifyUser method.
      */
-    public boolean getDueMemoDateList(){
+    public boolean getDueMemoDateList() {
         updateRemindToday();
 
         int remindTodaySize = remindTodayList.size();
 
-        if(remindTodaySize <= 0)
+        if (remindTodaySize <= 0)
             return false;
 
         notifyUser(remindTodaySize);
@@ -107,25 +211,28 @@ public class Manager {
      * This Method resets the remindTodayList list.
      * Then if local date matches the memoDate nextRemindDate it gets added to the remindTodayList List.
      */
-    private void updateRemindToday(){
+    private void updateRemindToday() {
         MemoDate memoDate;
-        if(memoDateList.size() != 0)
-            remindTodayList =  new ArrayList<>();;
+        if (memoDateList.size() != 0)
+            remindTodayList = new ArrayList<>();
+        ;
 
-        for(int i = 0; i < memoDateList.size() ; i++){
+        for (int i = 0; i < memoDateList.size(); i++) {
             memoDate = memoDateList.get(i);
-            if(memoDate.getNextRemindDate().isEqual(LocalDate.now())){
+            if (memoDate.getNextRemindDate().isEqual(LocalDate.now())) {
                 remindTodayList.add(memoDate);
             }
         }
 
         Variables.remindTodayList = remindTodayList;
     }
+
     /**
-     * Simple getter method for currentUser.
+     * Simple setter method for currentUser.
      */
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
+
 
 }
