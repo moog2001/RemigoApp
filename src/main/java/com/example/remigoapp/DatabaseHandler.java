@@ -189,7 +189,7 @@ public class DatabaseHandler {
      * @throws SQLException
      */
     public boolean deleteMemoDate(int memoDateIdInput) throws SQLException {
-        PreparedStatement statement = c.prepareStatement("DELETE from memo_date WHERE memo_date_id=" + memoDateIdInput + ";");
+        PreparedStatement statement = c.prepareStatement("DELETE from user_memo_date WHERE memo_date_id=" + memoDateIdInput + ";");
         int affectedRows = statement.executeUpdate();
 
         if (affectedRows == 0) {

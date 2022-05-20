@@ -169,7 +169,7 @@ public class Manager {
     private void notifyUser(int remindCount) {
 
         Notifications notificationBuilder = Notifications.create()
-                .title("You have " + remindCount + " notifications")
+                .title("You have notifications")
                 .text("Click here to see them")
                 .graphic(null)
                 .hideAfter(Duration.seconds(30))
@@ -206,7 +206,8 @@ public class Manager {
      * Then if local date matches the memoDate nextRemindDate it gets added to the remindTodayList List.
      */
     private void updateRemindToday() {
-        memoDateList = Variables.memoDateList;
+        if(memoDateList.size() >= 0)
+            memoDateList = Variables.memoDateList;
         MemoDate memoDate;
         if (memoDateList.size() != 0)
             remindTodayList = new ArrayList<>();
@@ -220,7 +221,7 @@ public class Manager {
             }
 
         }
-
+         Variables.remindTodayList = remindTodayList;
 
     }
 

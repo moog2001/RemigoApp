@@ -1,6 +1,8 @@
 package com.example.remigoapp;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -118,9 +120,8 @@ public class SectionController implements Initializable {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
-
-                memoDateList.add(newMemoDate);
+                if(memoDateList.size() <= 0)
+                    memoDateList.add(newMemoDate);
 
                 if(memoDateData == null)
                     memoDateData = Variables.memoDateData;
@@ -148,17 +149,42 @@ public class SectionController implements Initializable {
                         currentMemoDate = memoDateList.get(i);
                     }
                 }
+                listView.refresh();
 
             }
 
         });
 
-//        deleteMemoButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent actionEvent) {
-//
-//            }
-//        });
+        deleteMemoButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(memoDateList.size() <= 0)
+                    memoDateList = Variables.memoDateList;
+                if(memoDateData == null)
+                    memoDateData = Variables.memoDateData;
+
+                for(int i = 0; i < memoDateList.size(); i++){
+                    if(memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
+                        System.out.println("id " + memoDateList.get(i).getMemoId() + "current id " + currentMemoDate.getMemoId());
+                        if( databaseHandler == null)
+                            databaseHandler = Variables.databaseHandler;
+
+                        try {
+                            databaseHandler.deleteMemoDate(memoDateList.get(i).getMemoId());
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+                        memoDateList.remove(i);
+                        memoDateData.remove(i);
+                        break;
+                    }
+                }
+                clearText();
+
+                setListView(memoDateData);
+            }
+        });
     }
     private class CustomListCell extends ListCell<MemoDate> {
         private HBox content;
