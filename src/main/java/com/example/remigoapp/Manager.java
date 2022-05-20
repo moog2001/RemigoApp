@@ -99,7 +99,7 @@ public class Manager {
      * create a MemoDate in the application
      * @return
      */
-    public MemoDate createMemoDate(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate, LocalDate nextRemindDate, User userInput) throws SQLException {
+    public MemoDate createMemoDate(String title, String text, LocalDate createDate, LocalDate lastRemindDate, LocalDate nextRemindDate, User userInput) throws SQLException {
         MemoDate memoDate = new MemoDate(title, text, Constants.NULL_INT, createDate, lastRemindDate, nextRemindDate);
         int memoDateId = databaseHandler.createMemoDate(memoDate, userInput.getUserId());
         memoDate.setMemoId(memoDateId);
@@ -111,7 +111,7 @@ public class Manager {
      * create a MemoDAily in the application
      * @return
      */
-    public MemoDaily createMemoDaily(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate,
+    public MemoDaily createMemoDaily(String title, String text, LocalDate createDate, LocalDate lastRemindDate,
                                       LocalDate nextRemindDate, int interval, User userInput) throws SQLException {
         MemoDaily memoDaily = new MemoDaily(title, text, Constants.NULL_INT ,  createDate, lastRemindDate, nextRemindDate, interval);
         int memoDailyId = databaseHandler.createMemoDate(memoDaily, userInput.getUserId());
@@ -124,7 +124,7 @@ public class Manager {
      * create a Education in the application
      * @return
      */
-    public Education createEducation(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate,
+    public Education createEducation(String title, String text, LocalDate createDate, LocalDate lastRemindDate,
                                       LocalDate nextRemindDate, int interval, int streak, User userInput) throws SQLException {
         Education education = new Education(title,  text, Constants.NULL_INT, createDate,  lastRemindDate,
                 nextRemindDate, interval, streak);
