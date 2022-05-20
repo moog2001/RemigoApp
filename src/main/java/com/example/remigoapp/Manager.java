@@ -30,13 +30,13 @@ public class Manager {
     private DatabaseHandler databaseHandler;
 
 
-    public Manager(User currentUser) {
+    public Manager(User currentUser) throws SQLException {
         this.currentUser = currentUser;
         this.memoDateList = currentUser.getMemoDateList();
         start();
     }
 
-    public Manager() {
+    public Manager() throws SQLException {
         this.currentUser = Variables.currentUser;
         this.memoDateList = Variables.memoDateList;
         this.remindTodayList = Variables.remindTodayList;
@@ -49,16 +49,15 @@ public class Manager {
      * @author Moog
      * starts manager process
      */
-    public void start() {
+    public void start() throws SQLException {
         databaseHandler = Variables.getDatabaseHandler();
-//        setUpAsGuest();
+        setUpAsGuest();
     }
 
     /**
      * Starts application in As Guest
      */
     private void setUpAsGuest() throws SQLException {
-
         User asGuestUser;
         asGuestUser = databaseHandler.getUserData("AS GUEST user name");
         if(asGuestUser == null) {
