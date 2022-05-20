@@ -372,7 +372,7 @@ public class DatabaseHandler {
      * @since 2022-5-18
      */
     public int createMemo(Memo memoInput, int userIdInput) throws SQLException {
-        PreparedStatement statement = c.prepareStatement("INSERT INTO memo(type,title,text,create_date,user_id) Values(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement statement = c.prepareStatement("INSERT INTO memo(type,title,text,create_date, user_id) Values(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         statement.setInt(1, memoInput.getType());
         statement.setString(2, memoInput.getTitle());
         statement.setString(3, memoInput.getText());
@@ -466,7 +466,7 @@ public class DatabaseHandler {
 
     public User getUserData(String userName) throws SQLException {
         Statement statement = c.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from user where user_name='" + userName+ "'");
+        ResultSet resultSet = statement.executeQuery("select * from user where user_name='" + userName + "'");
         if (!resultSet.next()) {
 //            throw new SQLException("No user found with username: " + userName);
             return null;
