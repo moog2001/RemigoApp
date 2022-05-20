@@ -172,7 +172,7 @@ public class Manager {
                 .title("You have notifications")
                 .text("Click here to see them")
                 .graphic(null)
-                .hideAfter(Duration.seconds(30))
+                .hideAfter(Duration.seconds(5))
                 .position(Pos.BOTTOM_RIGHT)
                 .onAction(new EventHandler<ActionEvent>() {
                     @Override

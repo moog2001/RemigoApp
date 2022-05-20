@@ -1,3 +1,9 @@
+/**
+ * @author Ganbayar Sumiyakhuu
+ *
+ * Description of code:
+ * This class controls section_view.fxml.
+ */
 package com.example.remigoapp;
 
 import javafx.application.Application;
@@ -22,7 +28,9 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+/**
+ * This class implements Initializable.
+ */
 public class SectionController implements Initializable {
 
     @FXML
@@ -64,12 +72,19 @@ public class SectionController implements Initializable {
     private DatabaseHandler databaseHandler;
     Manager manager;
 
+    /**
+     * this method sets parameters initializes fxml.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         databaseHandler = Variables.getDatabaseHandler();
         memoDateList = Variables.memoDateList;
         memoDateData = Variables.memoDateData;
         manager = Variables.getManager();
+
+        /**
+         * This method sets a cell factory for listView. The cell factory uses CustomListCell.
+         */
         listView.setCellFactory(new Callback<ListView<MemoDate>, ListCell<MemoDate>>() {
             @Override
             public ListCell<MemoDate> call(ListView<MemoDate> memoDateListView) {
@@ -77,6 +92,10 @@ public class SectionController implements Initializable {
             }
         });
 
+        /**
+         * when item selected from list view this new event is created then executed.
+         * The event gets selected items value show it on memo.
+         */
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -90,16 +109,10 @@ public class SectionController implements Initializable {
             }
         });
 
-        memoDatePicker.setOnAction(event ->{
-            if(currentMemoDate != null)
-                for(int i = 0; i < memoDateList.size(); i++){
-                    if(memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
-                        memoDateList.get(i).setNextRemindDate(memoDatePicker.getValue());
-                        currentMemoDate.setNextRemindDate(memoDatePicker.getValue());
-                    }
-                }
-        });
-
+        /**
+         * When addMemoButton is clicked in scene this method creates a new event executes it.
+         * The Event adds a new memoDate to the database and shows it on the listView.
+         */
         addMemoButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -120,7 +133,7 @@ public class SectionController implements Initializable {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                if(memoDateList.size() <= 0)
+
                     memoDateList.add(newMemoDate);
 
                 if(memoDateData == null)
@@ -131,6 +144,10 @@ public class SectionController implements Initializable {
             }
         });
 
+        /**
+         *  When updateMemoButton is clicked in scene this method creates a new event executes it.
+         *  The event updates the database, listView using user input.
+         */
         updateMemoButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -149,12 +166,21 @@ public class SectionController implements Initializable {
                         currentMemoDate = memoDateList.get(i);
                     }
                 }
+                try {
+                    databaseHandler.updateMemoDate(currentMemoDate);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 listView.refresh();
 
             }
 
         });
 
+        /**
+         * When updateMemoButton is clicked in scene this method creates a new event executes it.
+         * The event deletes the memoDate from database and listView.
+         */
         deleteMemoButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -169,11 +195,11 @@ public class SectionController implements Initializable {
                         if( databaseHandler == null)
                             databaseHandler = Variables.databaseHandler;
 
-//                        try {
-//                            databaseHandler.deleteMemoDate(memoDateList.get(i).getMemoId());
-//                        } catch (SQLException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            databaseHandler.deleteMemoDate(memoDateList.get(i).getMemoId());
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
 
                         memoDateList.remove(i);
                         memoDateData.remove(i);
