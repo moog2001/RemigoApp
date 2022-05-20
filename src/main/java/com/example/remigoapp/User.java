@@ -100,6 +100,8 @@ public class User extends Person {
         this.lastName = lastName;
         this.age = age;
         this.gender = gender;
+        this.memoList = new ArrayList<Memo>();
+        this.memoDateList = new ArrayList<MemoDate>();
     }
 
     /**

@@ -22,20 +22,21 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     public Manager manager;
     User user;
-    HelloApplication appInstance;
     DatabaseHandler databaseHandler;
 
 
     @Override
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
+
+        Variables.setHelloApplication(this);
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("section_view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         ObservableList<MemoDate> memoDateData =  FXCollections.observableArrayList();
         SectionController sectionController = fxmlLoader.<SectionController>getController();;
 
-        appInstance = this;
         databaseHandler = new DatabaseHandler();
+        Variables.setDatabaseHandler(databaseHandler);
 
         user = new User("TestUser", "test@test.com", "testPass", 1,
                 false, "TestFName", "TestLName", 18, "Male");
@@ -53,7 +54,6 @@ public class HelloApplication extends Application {
 
         user.setMemoDateList(memoDateList);
         manager = new Manager(user);
-        manager.startTimer();
         sectionController.setListView(memoDateData);
 
         Variables.memoDateData = memoDateData;
@@ -79,10 +79,6 @@ public class HelloApplication extends Application {
 
     public User getUser() {
         return user;
-    }
-
-    public HelloApplication getAppInstance() {
-        return appInstance;
     }
 
     public DatabaseHandler getDatabaseHandler() {

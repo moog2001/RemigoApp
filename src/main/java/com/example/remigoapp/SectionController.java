@@ -75,7 +75,7 @@ public class SectionController implements Initializable {
                     return;
                 memoTitle.setText(currentMemoDate.getTitle());
                 memoText.setText(currentMemoDate.getText());
-
+                listView.
 
             }
         });
