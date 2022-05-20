@@ -34,6 +34,9 @@ public class Manager {
     }
 
     public Manager(){
+        this.currentUser = Variables.currentUser;
+        this.memoDateList = Variables.memoDateList;
+        this.remindTodayList = Variables.remindTodayList;
     };
 
     /**
@@ -43,7 +46,6 @@ public class Manager {
     TimerTask checkRemind = new TimerTask() {
         @Override
         public void run() {
-
             boolean tmp = getDueMemoDateList();
         }
     };
@@ -56,14 +58,14 @@ public class Manager {
      */
     public void startTimer(){
         if(memoDateList.size() <= 0)
-            memoDateList = currentUser.getMemoDateList();
+            memoDateList = Variables.memoDateList;
 
         updateRemindToday();
         checkNewRemind.scheduleAtFixedRate(checkRemind, 0, Constants.CHECK_INTERVAL);
     }
 
     /**
-     * This method send notifaction to the user. This sends how many notification currently user has.
+     * This method send notification to the user. This sends how many notification currently user has.
      * @param remindCount
      */
     private void notifyUser(int remindCount){
@@ -116,6 +118,8 @@ public class Manager {
                 remindTodayList.add(memoDate);
             }
         }
+
+        Variables.remindTodayList = remindTodayList;
     }
     /**
      * Simple getter method for currentUser.
