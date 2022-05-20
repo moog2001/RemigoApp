@@ -60,13 +60,14 @@ public class SectionController implements Initializable {
     private ObservableList<MemoDate> memoDateData;
     private MemoDate currentMemoDate = new MemoDate();
     private DatabaseHandler databaseHandler;
+    Manager manager;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         databaseHandler = Variables.getDatabaseHandler();
         memoDateList = Variables.memoDateList;
         memoDateData = Variables.memoDateData;
-
+        manager = Variables.getManager();
         listView.setCellFactory(new Callback<ListView<MemoDate>, ListCell<MemoDate>>() {
             @Override
             public ListCell<MemoDate> call(ListView<MemoDate> memoDateListView) {
@@ -82,7 +83,7 @@ public class SectionController implements Initializable {
                     return;
                 memoTitle.setText(currentMemoDate.getTitle());
                 memoText.setText(currentMemoDate.getText());
-
+                memoDatePicker.setValue(currentMemoDate.getNextRemindDate());
 
             }
         });
@@ -109,14 +110,14 @@ public class SectionController implements Initializable {
                     return;
                 }
 
-                newMemoDate.setTitle(memoTitle.getText());
-                newMemoDate.setText(memoText.getText());
-                newMemoDate.setCreateDate(LocalDate.now());
-                newMemoDate.setNextRemindDate(memoDatePicker.getValue());
-                newMemoDate.setMemoId(generateMemoId());
+                if( manager == null)
+                    manager = Variables.manager;
 
-                Manager manager = Variables.getManager();
-                //manager.createMemoDate(memoTitle.getText(), memoText.getText(), LocalDate.now(), LocalDate.now(),memoDatePicker.getValue(), Variables.currentUser);
+                try {
+                    newMemoDate=  manager.createMemoDate(memoTitle.getText(), memoText.getText(), LocalDate.now(), LocalDate.now(),memoDatePicker.getValue(), Variables.currentUser);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
 
                 memoDateList.add(newMemoDate);
@@ -151,6 +152,13 @@ public class SectionController implements Initializable {
             }
 
         });
+
+//        deleteMemoButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent actionEvent) {
+//
+//            }
+//        });
     }
     private class CustomListCell extends ListCell<MemoDate> {
         private HBox content;
@@ -186,19 +194,6 @@ public class SectionController implements Initializable {
     private void clearText(){
         memoText.setText("");
         memoTitle.setText("");
-    }
-
-    private int generateMemoId(){
-        String uniqueID = UUID.randomUUID().toString();
-        int memoId = 0;
-        for(int i = 0; i < uniqueID.length(); i++){
-            char tmp = uniqueID.charAt(i);
-            if(tmp >= '0' && tmp <= '9'){
-                memoId = memoId * 10 + Character.getNumericValue(tmp);
-            }
-        }
-
-        return memoId;
     }
 
     @FXML

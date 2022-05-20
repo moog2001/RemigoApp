@@ -29,17 +29,7 @@ public class Manager {
     private List<MemoDate> remindTodayList = new ArrayList<>();
     private DatabaseHandler databaseHandler;
 
-
-    public Manager(User currentUser) {
-        this.currentUser = currentUser;
-        this.memoDateList = currentUser.getMemoDateList();
-        start();
-    }
-
     public Manager() {
-        this.currentUser = Variables.currentUser;
-        this.memoDateList = Variables.memoDateList;
-        this.remindTodayList = Variables.remindTodayList;
         start();
     }
 
@@ -51,6 +41,10 @@ public class Manager {
      */
     public void start() {
         databaseHandler = Variables.getDatabaseHandler();
+        this.currentUser = Variables.currentUser;
+        this.memoDateList = Variables.memoDateList;
+        this.remindTodayList = Variables.remindTodayList;
+        startTimer();
 //        setUpAsGuest();
     }
 
@@ -150,6 +144,7 @@ public class Manager {
         @Override
         public void run() {
             boolean tmp = getDueMemoDateList();
+            System.out.println("Check " + tmp);
         }
     };
 
@@ -159,13 +154,13 @@ public class Manager {
      * class updateRemindToday() method starts Fixed Rate Timer.
      * Schedule of the Timer is Constants.CHECK_INTERVAL starts without delay
      */
-//    public void startTimer() {
-//        if (memoDateList.size() <= 0)
-//            memoDateList = Variables.memoDateList;
-//
-//        updateRemindToday();
-//        checkNewRemind.scheduleAtFixedRate(checkRemind, 0, Constants.CHECK_INTERVAL);
-//    }
+    public void startTimer() {
+        if (memoDateList.size() <= 0)
+            memoDateList = Variables.memoDateList;
+
+        updateRemindToday();
+        checkNewRemind.scheduleAtFixedRate(checkRemind, 0, Constants.CHECK_INTERVAL);
+    }
 
     /**
      * This method send notification to the user. This sends how many notification currently user has.
@@ -201,7 +196,7 @@ public class Manager {
 
         if (remindTodaySize <= 0)
             return false;
-
+        System.out.println(remindTodaySize);
         notifyUser(remindTodaySize);
         return true;
     }
@@ -211,19 +206,22 @@ public class Manager {
      * Then if local date matches the memoDate nextRemindDate it gets added to the remindTodayList List.
      */
     private void updateRemindToday() {
+        memoDateList = Variables.memoDateList;
         MemoDate memoDate;
         if (memoDateList.size() != 0)
             remindTodayList = new ArrayList<>();
-        ;
+
 
         for (int i = 0; i < memoDateList.size(); i++) {
             memoDate = memoDateList.get(i);
-            if (memoDate.getNextRemindDate().isEqual(LocalDate.now())) {
+
+            if (memoDate.getNextRemindDate().isBefore(LocalDate.now()) || memoDate.getNextRemindDate().isEqual(LocalDate.now())) {
                 remindTodayList.add(memoDate);
             }
+
         }
 
-        Variables.remindTodayList = remindTodayList;
+
     }
 
     /**

@@ -53,7 +53,7 @@ public class HelloApplication extends Application {
         memoDateData.add(memoDate2);
 
         user.setMemoDateList(memoDateList);
-        manager = new Manager(user);
+        manager = new Manager();
         sectionController.setListView(memoDateData);
 
         Variables.memoDateData = memoDateData;
