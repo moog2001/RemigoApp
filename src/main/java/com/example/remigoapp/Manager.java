@@ -51,8 +51,9 @@ public class Manager {
     /**
      * Starts application in As Guest
      */
-    private void setUpAsGuest() {
-
+    private void setUpAsGuest() throws SQLException {
+        User asGuestUser = createUser("AS GUEST username", "ASGUEST@email.com", "AS GUEST password",false,"AS", "GUEST", Constants.NULL_INT,"MALE");
+        Variables.setCurrentUserData(asGuestUser);
     }
 
 //    private User createAsGuestUser(){
