@@ -72,6 +72,7 @@ public class SectionController implements Initializable {
     private MemoDate currentMemoDate = new MemoDate();
     private DatabaseHandler databaseHandler;
     HelloApplication helloApplication;
+    private Manager manager;
 
     /**
      * this method sets parameters initializes fxml.

@@ -33,7 +33,6 @@ public class Manager {
         start();
     }
 
-    ;
 
     /**
      * @author Moog
@@ -44,7 +43,13 @@ public class Manager {
         this.currentUser = Variables.currentUser;
         this.memoDateList = Variables.memoDateList;
         this.remindTodayList = Variables.remindTodayList;
-        startTimer();
+
+        try {
+            setUpAsGuest();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //startTimer();
 //        setUpAsGuest();
     }
 
@@ -54,6 +59,9 @@ public class Manager {
     private void setUpAsGuest() throws SQLException {
         User asGuestUser = createUser("AS GUEST username", "ASGUEST@email.com", "AS GUEST password",false,"AS", "GUEST", Constants.NULL_INT,"MALE");
         Variables.setCurrentUserData(asGuestUser);
+        for(int i = 0; i < memoDateList.size(); i++){
+            Variables.memoDateData.add(memoDateList.get(i));
+        }
     }
 
 //    private User createAsGuestUser(){

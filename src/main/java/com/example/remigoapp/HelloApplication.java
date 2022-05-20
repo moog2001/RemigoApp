@@ -31,35 +31,42 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
+        ObservableList<MemoDate> memoDateData =  FXCollections.observableArrayList();
+        Variables.memoDateData = memoDateData;
         databaseHandler = new DatabaseHandler();
         Variables.setHelloApplication(this);
         Variables.setDatabaseHandler(databaseHandler);
         databaseHandler.resetDatabaseData("agreed");
 
+        manager = new Manager();
+        Variables.setManager(manager);
+        manager.start();
+
         currentStage = stage;
         FXMLLoader fxmlLoaderLoginView = new FXMLLoader(HelloApplication.class.getResource("login_view.fxml"));
-        LoginController loginController = fxmlLoaderLoginView.getController();
         Scene sceneLogin = new Scene(fxmlLoaderLoginView.load());
+        LoginController loginController = fxmlLoaderLoginView.getController();
         loginStage = new Stage();
         loginStage.setTitle("Login");
         loginStage.setScene(sceneLogin);
         FXMLLoader fxmlLoaderFolderView = new FXMLLoader(HelloApplication.class.getResource("folder_view.fxml"));
-        FolderController folderController = fxmlLoaderFolderView.getController();
         Scene sceneFolder = new Scene(fxmlLoaderFolderView.load());
+        FolderController folderController = fxmlLoaderFolderView.getController();
         folderStage = new Stage();
         folderStage.setTitle("Folders");
         folderStage.setScene(sceneFolder);
         FXMLLoader fxmlLoaderSectionView = new FXMLLoader(HelloApplication.class.getResource("section_view.fxml"));
-        SectionController sectionController = fxmlLoaderSectionView.getController();
         Scene sceneSection = new Scene(fxmlLoaderSectionView.load());
+        SectionController sectionController = fxmlLoaderSectionView.getController();
         sectionStage = new Stage();
         sectionStage.setTitle("Section");
         sectionStage.setScene(sceneSection);
 
-        manager = new Manager();
-        manager.start();
+        user = Variables.getCurrentUser();
+        sectionController.setListView(Variables.memoDateData);
 
-        startLoginView();
+        startSectionView();
+
     }
 
     /**
@@ -99,6 +106,7 @@ public class HelloApplication extends Application {
         if (currentStage != null) {
             currentStage.close();
         }
+
         currentStage = sectionStage;
         sectionStage.show();
         return true;
