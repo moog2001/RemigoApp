@@ -319,6 +319,7 @@ public class DatabaseHandler {
         }
 
         Statement statement = c.createStatement();
+        statement.executeUpdate("delete from sqlite_sequence;");
         statement.executeUpdate("delete from user;");
         statement.executeUpdate("delete from memo;");
         statement.executeUpdate("delete from memo_date;");

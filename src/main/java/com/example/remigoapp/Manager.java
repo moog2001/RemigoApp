@@ -49,7 +49,13 @@ public class Manager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         startTimer();
+//        try {
+//            databaseHandler.resetDatabaseData("agreed");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 //        setUpAsGuest();
     }
 
