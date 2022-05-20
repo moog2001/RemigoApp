@@ -37,7 +37,8 @@ public class HelloApplication extends Application {
 
         databaseHandler = new DatabaseHandler();
         Variables.setDatabaseHandler(databaseHandler);
-        
+        databaseHandler.resetDatabaseData("agreed");
+
         user = new User("TestUser", "test@test.com", "testPass", 1,
                 false, "TestFName", "TestLName", 18, "Male");
 

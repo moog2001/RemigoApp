@@ -20,7 +20,7 @@ public class DatabaseHandler {
         Statement statement = c.createStatement();
         statement.executeUpdate("PRAGMA foreign_keys = ON"); // this line allows cascade delete on the sql database
 //        resetDatabaseData("agreed");
-        resetAsGuest();
+//        resetAsGuest();
     }
 
 
