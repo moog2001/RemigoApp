@@ -51,7 +51,6 @@ public class Manager {
      */
     public void start() {
         databaseHandler = Variables.getDatabaseHandler();
-//        startTimer();
 //        setUpAsGuest();
     }
 
@@ -72,7 +71,7 @@ public class Manager {
      * @return
      * @throws SQLException
      */
-    private User createUser(String userName, String eMail, String password, boolean isGuest,
+    public User createUser(String userName, String eMail, String password, boolean isGuest,
                             String firstName, String lastName, int age, String gender) throws SQLException {
         User user = new User(userName, eMail, password, Constants.NULL_INT, isGuest,
                 firstName, lastName, age, gender);
@@ -88,7 +87,7 @@ public class Manager {
      * @return memo
      * @throws SQLException
      */
-    private Memo createMemo(String title, String text, LocalDate createDate, User userInput) throws SQLException {
+    public Memo createMemo(String title, String text, LocalDate createDate, User userInput) throws SQLException {
         Memo memo = new Memo(title, text, Constants.NULL_INT, createDate);
         int memoId = databaseHandler.createMemo(memo, userInput.getUserId());
         memo.setMemoId(memoId);
@@ -100,7 +99,7 @@ public class Manager {
      * create a MemoDate in the application
      * @return
      */
-    private MemoDate createMemoDate(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate, LocalDate nextRemindDate, User userInput) throws SQLException {
+    public MemoDate createMemoDate(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate, LocalDate nextRemindDate, User userInput) throws SQLException {
         MemoDate memoDate = new MemoDate(title, text, Constants.NULL_INT, createDate, lastRemindDate, nextRemindDate);
         int memoDateId = databaseHandler.createMemoDate(memoDate, userInput.getUserId());
         memoDate.setMemoId(memoDateId);
@@ -112,7 +111,7 @@ public class Manager {
      * create a MemoDAily in the application
      * @return
      */
-    private MemoDaily createMemoDaily(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate,
+    public MemoDaily createMemoDaily(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate,
                                       LocalDate nextRemindDate, int interval, User userInput) throws SQLException {
         MemoDaily memoDaily = new MemoDaily(title, text, Constants.NULL_INT ,  createDate, lastRemindDate, nextRemindDate, interval);
         int memoDailyId = databaseHandler.createMemoDate(memoDaily, userInput.getUserId());
@@ -125,7 +124,7 @@ public class Manager {
      * create a Education in the application
      * @return
      */
-    private Education createEducation(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate,
+    public Education createEducation(String title, String text, int memoId, LocalDate createDate, LocalDate lastRemindDate,
                                       LocalDate nextRemindDate, int interval, int streak, User userInput) throws SQLException {
         Education education = new Education(title,  text, Constants.NULL_INT, createDate,  lastRemindDate,
                 nextRemindDate, interval, streak);
@@ -138,7 +137,7 @@ public class Manager {
      * @author Moog
      * @return
      */
-    private User resetUser(User userInput) throws SQLException {
+    public User resetUser(User userInput) throws SQLException {
         userInput = databaseHandler.getUserData(userInput.getUserId());
         return userInput;
     }
