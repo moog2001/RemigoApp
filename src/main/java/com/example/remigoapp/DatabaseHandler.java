@@ -556,19 +556,23 @@ public class DatabaseHandler {
         List<Memo> memoList = new ArrayList<>();
         Statement statement = c.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from user_memo where user_id=" + userIdInput);
-        if (!resultSet.next()) {
-            return null;
-        }
-        int memoId = resultSet.getInt(3);
-        resultSet = statement.executeQuery("select * from memo where memo_id=" + memoId);
+        List<Integer> memoIdList = new ArrayList<>();
         while (resultSet.next()) {
-            int type = resultSet.getInt(2);
-            String title = resultSet.getString(3);
-            String text = resultSet.getString(4);
-            LocalDate createDate = LocalDate.parse(resultSet.getString(5));
-            Memo memo = new Memo(title, text, memoId, createDate);
-            memoList.add(memo);
+            memoIdList.add(resultSet.getInt("memo_id"));
         }
+        for(int i = 0; i < memoIdList.size(); i++){
+            int memoId = resultSet.getInt(3);
+            resultSet = statement.executeQuery("select * from memo where memo_id=" + memoId);
+            if (resultSet.next()) {
+                int type = resultSet.getInt(2);
+                String title = resultSet.getString(3);
+                String text = resultSet.getString(4);
+                LocalDate createDate = LocalDate.parse(resultSet.getString(5));
+                Memo memo = new Memo(title, text, memoId, createDate);
+                memoList.add(memo);
+            }
+        }
+
         statement.close();
         return memoList;
     }
