@@ -27,6 +27,9 @@ public class HelloApplication extends Application {
     Stage loginStage;
     Stage folderStage;
     Stage sectionStage;
+    LoginController loginController;
+    SectionController sectionController;
+    FolderController folderController;
 
 
     @Override
@@ -43,19 +46,19 @@ public class HelloApplication extends Application {
         currentStage = stage;
         FXMLLoader fxmlLoaderLoginView = new FXMLLoader(HelloApplication.class.getResource("login_view.fxml"));
         Scene sceneLogin = new Scene(fxmlLoaderLoginView.load());
-        LoginController loginController = fxmlLoaderLoginView.getController();
+        loginController = fxmlLoaderLoginView.getController();
         loginStage = new Stage();
         loginStage.setTitle("Login");
         loginStage.setScene(sceneLogin);
         FXMLLoader fxmlLoaderFolderView = new FXMLLoader(HelloApplication.class.getResource("folder_view.fxml"));
         Scene sceneFolder = new Scene(fxmlLoaderFolderView.load());
-        FolderController folderController = fxmlLoaderFolderView.getController();
+        folderController = fxmlLoaderFolderView.getController();
         folderStage = new Stage();
         folderStage.setTitle("Folders");
         folderStage.setScene(sceneFolder);
         FXMLLoader fxmlLoaderSectionView = new FXMLLoader(HelloApplication.class.getResource("section_view.fxml"));
         Scene sceneSection = new Scene(fxmlLoaderSectionView.load());
-        SectionController sectionController = fxmlLoaderSectionView.getController();
+        sectionController = fxmlLoaderSectionView.getController();
         sectionStage = new Stage();
         sectionStage.setTitle("Section");
         sectionStage.setScene(sceneSection);
@@ -63,7 +66,7 @@ public class HelloApplication extends Application {
         user = Variables.getCurrentUser();
         sectionController.setListView(Variables.memoDateData);
 
-        startSectionView();
+        startFolderView();
 
     }
 
@@ -126,5 +129,17 @@ public class HelloApplication extends Application {
 
     public DatabaseHandler getDatabaseHandler() {
         return databaseHandler;
+    }
+
+    public LoginController getLoginController() {
+        return loginController;
+    }
+
+    public SectionController getSectionController() {
+        return sectionController;
+    }
+
+    public FolderController getFolderController() {
+        return folderController;
     }
 }

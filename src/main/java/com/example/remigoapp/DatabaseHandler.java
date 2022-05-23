@@ -8,8 +8,6 @@ import java.util.List;
 
 public class DatabaseHandler {
     Connection c = null;
-
-
     DatabaseHandler() throws SQLException, ClassNotFoundException {
         connect();
     }
