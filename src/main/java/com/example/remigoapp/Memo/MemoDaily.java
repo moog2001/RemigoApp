@@ -8,7 +8,9 @@
  * interval: interval days of nextRemindDate
  * type: type of this class
  */
-package com.example.remigoapp;
+package com.example.remigoapp.Memo;
+
+import com.example.remigoapp.Constants;
 
 import java.time.LocalDate;
 
@@ -47,7 +49,8 @@ public class MemoDaily extends MemoDate{
     }
 
     public void resetInterval(){
-
+        if(LocalDate.now() == nextRemindDate)
+            nextRemindDate = nextRemindDate.plusDays(interval);
     }
 
     /**

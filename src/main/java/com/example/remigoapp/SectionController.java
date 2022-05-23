@@ -6,6 +6,9 @@
  */
 package com.example.remigoapp;
 
+import com.example.remigoapp.Memo.Education;
+import com.example.remigoapp.Memo.MemoDaily;
+import com.example.remigoapp.Memo.MemoDate;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -121,26 +124,36 @@ public class SectionController implements Initializable {
                 memoDatePicker.setValue(LocalDate.now());
 
                 switch (currentType){
-                    case Constants.TYPE_MEMO:{
-                        break;
-                    }
                     case Constants.TYPE_MEMO_DATE:{
                         memoDatePicker.setValue(currentMemoDate.getNextRemindDate());
                     }
                         break;
 
                     case Constants.TYPE_MEMO_DAILY:{
+                        MemoDaily currentMemoDaily = (MemoDaily) currentMemoDate;
+                        int text = currentMemoDaily.getInterval();
+                        memoInterval.setText(Integer.toString(text));
+                        currentMemoDaily.resetInterval();
+                        System.out.println(currentMemoDaily.getNextRemindDate());
+                        try {
+                            databaseHandler.updateMemoDate(currentMemoDaily);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
 
                         break;
                     }
                     case Constants.TYPE_EDUCATION:{
-                        break;
+                        Education currentEducation = (Education) currentMemoDate;
+                        currentEducation.resetInterval();
                     }
+
                     default:{
 
                         break;
                     }
                 }
+
 
             }
         });
@@ -160,6 +173,7 @@ public class SectionController implements Initializable {
 
                 switch (currentType){
                     case Constants.TYPE_MEMO:{
+
                         break;
                     }
                     case Constants.TYPE_MEMO_DATE:{
@@ -169,8 +183,6 @@ public class SectionController implements Initializable {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
-                        Variables.memoDateData.add(newMemoDate);
-                        setListView(Variables.memoDateData);
                         break;
                     }
                     case Constants.TYPE_MEMO_DAILY:{
@@ -180,10 +192,15 @@ public class SectionController implements Initializable {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
-                        System.out.println("YES");
                         break;
                     }
                     case Constants.TYPE_EDUCATION:{
+                        try{
+                            newMemoDate = manager.createEducation(memoTitle.getText(), memoText.getText(), LocalDate.now(),
+                                    LocalDate.now(),memoDatePicker.getValue(),2, 0,Variables.currentUser);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     }
                     default:{
@@ -192,10 +209,9 @@ public class SectionController implements Initializable {
                     }
                 }
 
-
-
-                currentMemoDateList.add(newMemoDate);
+                Variables.memoDateData.add(newMemoDate);
                 initCurrentList();
+                currentMemoDateList.add(newMemoDate);
 
                 clearText();
             }
@@ -222,11 +238,13 @@ public class SectionController implements Initializable {
                         currentMemoDate = currentMemoDateList.get(i);
                     }
                 }
+
                 try {
                     databaseHandler.updateMemoDate(currentMemoDate);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
                 listView.refresh();
 
             }
@@ -317,11 +335,7 @@ public class SectionController implements Initializable {
 //        System.out.println( Variables.currentType + " check");
         currentType = Variables.currentType;
         currentMemoDateList = new ArrayList<>();
-
-
-        for(int i = 0; i < Variables.memoDateData.size(); i++){
-            Variables.memoDateData.remove(i);
-        }
+        Variables.memoDateData.clear();
 
         listView.getSelectionModel().clearSelection();
         switch (currentType) {
@@ -348,7 +362,7 @@ public class SectionController implements Initializable {
             }
 
             case Constants.TYPE_EDUCATION: {
-                memoDatePicker.setVisible(false);
+                memoDatePicker.setVisible(true);
                 dateLabel.setVisible(false);
                 memoInterval.setVisible(false);
                 intervalLabel.setVisible(false);
@@ -364,10 +378,9 @@ public class SectionController implements Initializable {
         for(int i = 0; i < Variables.memoDateList.size(); i++){
             if(Variables.memoDateList.get(i).getType() == currentType) {
                 currentMemoDateList.add(Variables.memoDateList.get(i));
+                Variables.memoDateData.add(Variables.memoDateList.get(i));
             }
         }
-
-        Variables.memoDateData.addAll(currentMemoDateList);
 
         setListView(Variables.memoDateData);
         clearText();

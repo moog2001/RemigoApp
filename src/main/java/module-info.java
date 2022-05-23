@@ -6,4 +6,6 @@ module com.example.remigoapp {
 
     opens com.example.remigoapp to javafx.fxml;
     exports com.example.remigoapp;
+    exports com.example.remigoapp.Memo;
+    opens com.example.remigoapp.Memo to javafx.fxml;
 }

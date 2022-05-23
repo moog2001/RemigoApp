@@ -10,6 +10,10 @@
  */
 package com.example.remigoapp;
 
+import com.example.remigoapp.Memo.Education;
+import com.example.remigoapp.Memo.Memo;
+import com.example.remigoapp.Memo.MemoDaily;
+import com.example.remigoapp.Memo.MemoDate;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,7 +23,6 @@ import org.controlsfx.control.Notifications;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 
 public class Manager {
@@ -145,7 +148,7 @@ public class Manager {
      * @return
      */
     public MemoDaily createMemoDaily(String title, String text, LocalDate createDate, LocalDate lastRemindDate,
-                                      LocalDate nextRemindDate, int interval, User userInput) throws SQLException {
+                                     LocalDate nextRemindDate, int interval, User userInput) throws SQLException {
         MemoDaily memoDaily = new MemoDaily(title, text, Constants.NULL_INT ,  createDate, lastRemindDate, nextRemindDate, interval);
         int memoDailyId = databaseHandler.createMemoDate(memoDaily, userInput.getUserId());
         memoDaily.setMemoId(memoDailyId);
@@ -158,7 +161,7 @@ public class Manager {
      * @return
      */
     public Education createEducation(String title, String text, LocalDate createDate, LocalDate lastRemindDate,
-                                      LocalDate nextRemindDate, int interval, int streak, User userInput) throws SQLException {
+                                     LocalDate nextRemindDate, int interval, int streak, User userInput) throws SQLException {
         Education education = new Education(title,  text, Constants.NULL_INT, createDate,  lastRemindDate,
                 nextRemindDate, interval, streak);
         int educationId = databaseHandler.createMemoDate(education, userInput.getUserId());

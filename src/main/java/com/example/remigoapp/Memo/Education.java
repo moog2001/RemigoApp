@@ -9,11 +9,14 @@
  * streak: number of times User successfully remembered Education
  * type: type of this class
  */
-package com.example.remigoapp;
+package com.example.remigoapp.Memo;
+
+import com.example.remigoapp.Constants;
+import com.example.remigoapp.Memo.MemoDaily;
 
 import java.time.LocalDate;
 
-public class Education extends MemoDaily{
+public class Education extends MemoDaily {
     private int streak;
     private static final int type = Constants.TYPE_EDUCATION;
 

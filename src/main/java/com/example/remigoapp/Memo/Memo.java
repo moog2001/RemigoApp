@@ -10,7 +10,9 @@
  * createDate: Creation date of this memo
  * type: type of this class
  */
-package com.example.remigoapp;
+package com.example.remigoapp.Memo;
+
+import com.example.remigoapp.Constants;
 
 import java.time.LocalDate;
 

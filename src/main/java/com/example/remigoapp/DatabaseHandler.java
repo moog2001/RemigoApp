@@ -1,5 +1,10 @@
 package com.example.remigoapp;
 
+import com.example.remigoapp.Memo.Education;
+import com.example.remigoapp.Memo.Memo;
+import com.example.remigoapp.Memo.MemoDaily;
+import com.example.remigoapp.Memo.MemoDate;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

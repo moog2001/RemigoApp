@@ -1,7 +1,8 @@
 package com.example.remigoapp;
 
+import com.example.remigoapp.Memo.Memo;
+import com.example.remigoapp.Memo.MemoDate;
 import javafx.collections.ObservableList;
-import javafx.scene.chart.PieChart;
 
 import java.util.ArrayList;
 import java.util.List;
