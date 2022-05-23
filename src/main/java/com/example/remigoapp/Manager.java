@@ -104,8 +104,9 @@ public class Manager {
     /**
      * create a User in the application and return the object.
      *
-     * @return
+     * @return User
      * @throws SQLException
+     * @author Moog
      */
     public User createUser(String userName, String eMail, String password, boolean isGuest,
                             String firstName, String lastName, int age, String gender) throws SQLException {
@@ -134,6 +135,7 @@ public class Manager {
     /**
      * create a MemoDate in the application
      * @return
+     * @author Moog
      */
     public MemoDate createMemoDate(String title, String text, LocalDate createDate, LocalDate lastRemindDate, LocalDate nextRemindDate, User userInput) throws SQLException {
         MemoDate memoDate = new MemoDate(title, text, Constants.NULL_INT, createDate, lastRemindDate, nextRemindDate);
@@ -146,6 +148,7 @@ public class Manager {
     /**
      * create a MemoDAily in the application
      * @return
+     * @author Moog
      */
     public MemoDaily createMemoDaily(String title, String text, LocalDate createDate, LocalDate lastRemindDate,
                                      LocalDate nextRemindDate, int interval, User userInput) throws SQLException {
@@ -159,6 +162,7 @@ public class Manager {
     /**
      * create a Education in the application
      * @return
+     * @author Moog
      */
     public Education createEducation(String title, String text, LocalDate createDate, LocalDate lastRemindDate,
                                      LocalDate nextRemindDate, int interval, int streak, User userInput) throws SQLException {
@@ -195,6 +199,7 @@ public class Manager {
      * Checks memoDateList is empty. if memoDateList is empty gets memoDateList from the user.
      * class updateRemindToday() method starts Fixed Rate Timer.
      * Schedule of the Timer is Constants.CHECK_INTERVAL starts without delay
+     * @author Sumiya
      */
     public void startTimer() {
         if (memoDateList.size() <= 0)
