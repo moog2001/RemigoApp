@@ -65,11 +65,6 @@ public class DatabaseHandler {
         int educationTestId = createMemoDate(educationTest, userId);
         educationTest.setMemoId(educationTestId);
 
-        User asGuestClone = getUserData(asGuestUser.getUserId()); // add breakpoint and debug to see the result.
-
-        asGuestClone.setUserName("updated AS GUEST username");
-        updateUserData(asGuestClone);
-        asGuestClone = getUserData(asGuestClone.getUserId());
 
         memoTest.setTitle("test update title");
         boolean testUpdate = updateMemo(memoTest);
@@ -91,7 +86,6 @@ public class DatabaseHandler {
 //        deleteMemo(memoTest);
 //        deleteMemoDate(educationTest);
 
-        asGuestClone = getUserData(asGuestClone.getUserId());
 
 
     }
@@ -191,7 +185,7 @@ public class DatabaseHandler {
         int affectedRows = statement.executeUpdate();
 
         if (affectedRows == 0) {
-            throw new SQLException("Could not insert into AS GUEST");
+            return false;
         }
 
         statement.close();
@@ -558,7 +552,7 @@ public class DatabaseHandler {
             memoIdList.add(resultSet.getInt("memo_id"));
         }
         for(int i = 0; i < memoIdList.size(); i++){
-            int memoId = resultSet.getInt(3);
+            int memoId = memoIdList.get(i);
             resultSet = statement.executeQuery("select * from memo where memo_id=" + memoId);
             if (resultSet.next()) {
                 int type = resultSet.getInt(2);
