@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Variables {
     static public HelloApplication helloApplication;
+    static public SectionController sectionController;
     static public DatabaseHandler databaseHandler;
     static public List<Memo> memoList = new ArrayList<>();
     static public List<MemoDate> memoDateList = new ArrayList<>();

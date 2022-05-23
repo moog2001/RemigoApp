@@ -62,7 +62,7 @@ public class HelloApplication extends Application {
         sectionStage = new Stage();
         sectionStage.setTitle("Section");
         sectionStage.setScene(sceneSection);
-
+        Variables.sectionController = sectionController;
         user = Variables.getCurrentUser();
         sectionController.setListView(Variables.memoDateData);
 

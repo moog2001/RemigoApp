@@ -1,5 +1,7 @@
 package com.example.remigoapp;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import org.controlsfx.control.GridCell;
@@ -27,15 +29,39 @@ public class GridItemCell extends GridCell<Section>{
         switch (type){
             case Constants.TYPE_MEMO:{
                 svgPath.setFill(Color.GRAY);
+                this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Variables.getHelloApplication().startSectionView();
+                    }
+                });
                 break;
             }case Constants.TYPE_MEMO_DATE:{
                 svgPath.setFill(Color.ORANGE);
+                this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Variables.getHelloApplication().startSectionView();
+                    }
+                });
                 break;
             }case Constants.TYPE_MEMO_DAILY:{
                 svgPath.setFill(Color.YELLOW);
+                this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Variables.getHelloApplication().startSectionView();
+                    }
+                });
                 break;
             }case Constants.TYPE_EDUCATION:{
                 svgPath.setFill(Color.BLUE);
+                this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Variables.getHelloApplication().startSectionView();
+                    }
+                });
                 break;
             } default:{
                 break;

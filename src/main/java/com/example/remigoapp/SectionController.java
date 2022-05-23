@@ -85,6 +85,8 @@ public class SectionController implements Initializable {
         memoDateData = Variables.memoDateData;
         manager = Variables.getManager();
 
+
+
         /**
          * This method sets a cell factory for listView. The cell factory uses CustomListCell.
          */
