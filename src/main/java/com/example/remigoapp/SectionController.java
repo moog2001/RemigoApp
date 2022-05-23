@@ -6,9 +6,6 @@
  */
 package com.example.remigoapp;
 
-import com.example.remigoapp.Memo.Education;
-import com.example.remigoapp.Memo.MemoDaily;
-import com.example.remigoapp.Memo.MemoDate;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;

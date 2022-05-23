@@ -10,9 +10,10 @@
  * nextRemindDate: next remind date of this MemoDate
  * type: type of this class
  */
-package com.example.remigoapp.Memo;
+package com.example.remigoapp;
 
 import com.example.remigoapp.Constants;
+import com.example.remigoapp.Memo;
 
 import java.time.LocalDate;
 

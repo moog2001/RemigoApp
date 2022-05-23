@@ -1,6 +1,5 @@
 package com.example.remigoapp;
 
-import com.example.remigoapp.Memo.MemoDate;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

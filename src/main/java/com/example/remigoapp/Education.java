@@ -9,10 +9,7 @@
  * streak: number of times User successfully remembered Education
  * type: type of this class
  */
-package com.example.remigoapp.Memo;
-
-import com.example.remigoapp.Constants;
-import com.example.remigoapp.Memo.MemoDaily;
+package com.example.remigoapp;
 
 import java.time.LocalDate;
 
