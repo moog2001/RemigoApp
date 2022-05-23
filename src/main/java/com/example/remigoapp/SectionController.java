@@ -6,9 +6,8 @@
  */
 package com.example.remigoapp;
 
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,7 +26,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This class implements Initializable.
@@ -66,13 +64,24 @@ public class SectionController implements Initializable {
 
     @FXML
     private Button deleteMemoButton;
+    @FXML
+    private TextField memoInterval;
 
-    private List<MemoDate> memoDateList = new ArrayList<>();
-    private ObservableList<MemoDate> memoDateData;
+    @FXML
+    private Label titleLabel;
+
+    @FXML
+    private Label dateLabel;
+
+    @FXML
+    private Label intervalLabel;
+
     private MemoDate currentMemoDate = new MemoDate();
+    private List<MemoDate> currentMemoDateList = new ArrayList<>();
     private DatabaseHandler databaseHandler;
-    HelloApplication helloApplication;
+    private HelloApplication helloApplication;
     private Manager manager;
+    private int currentType;
 
     /**
      * this method sets parameters initializes fxml.
@@ -81,11 +90,10 @@ public class SectionController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         helloApplication = Variables.getHelloApplication();
         databaseHandler = Variables.getDatabaseHandler();
-        memoDateList = Variables.memoDateList;
-        memoDateData = Variables.memoDateData;
         manager = Variables.getManager();
+        currentType = Variables.currentType;
 
-
+        initCurrentList();
 
         /**
          * This method sets a cell factory for listView. The cell factory uses CustomListCell.
@@ -107,9 +115,32 @@ public class SectionController implements Initializable {
                 currentMemoDate = listView.getSelectionModel().getSelectedItem();
                 if(currentMemoDate == null)
                     return;
+
                 memoTitle.setText(currentMemoDate.getTitle());
                 memoText.setText(currentMemoDate.getText());
-                memoDatePicker.setValue(currentMemoDate.getNextRemindDate());
+                memoDatePicker.setValue(LocalDate.now());
+
+                switch (currentType){
+                    case Constants.TYPE_MEMO:{
+                        break;
+                    }
+                    case Constants.TYPE_MEMO_DATE:{
+                        memoDatePicker.setValue(currentMemoDate.getNextRemindDate());
+                    }
+                        break;
+
+                    case Constants.TYPE_MEMO_DAILY:{
+
+                        break;
+                    }
+                    case Constants.TYPE_EDUCATION:{
+                        break;
+                    }
+                    default:{
+
+                        break;
+                    }
+                }
 
             }
         });
@@ -122,43 +153,50 @@ public class SectionController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 MemoDate newMemoDate = new MemoDate();
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Wrong Input");
-                if(memoTitle.getText() == ""){
-                    alert.setContentText("Invalid Memo_Title");
-                    alert.showAndWait();
-                    return;
-                }
-
-                if(memoText.getText() == ""){
-                    alert.setContentText("Invalid Memo_Text");
-                    alert.showAndWait();
-                    return;
-                }
-
-                if(memoDatePicker.getValue() == null){
-                    alert.setContentText("Invalid Memo_Date");
-                    alert.showAndWait();
-                    return;
-                }
-
-
+                inputChecker();
 
                 if( manager == null)
                     manager = Variables.manager;
 
-                try {
-                    newMemoDate=  manager.createMemoDate(memoTitle.getText(), memoText.getText(), LocalDate.now(), LocalDate.now(),memoDatePicker.getValue(), Variables.currentUser);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                switch (currentType){
+                    case Constants.TYPE_MEMO:{
+                        break;
+                    }
+                    case Constants.TYPE_MEMO_DATE:{
+                        try {
+                            newMemoDate=  manager.createMemoDate(memoTitle.getText(), memoText.getText(), LocalDate.now(),
+                                    LocalDate.now(),memoDatePicker.getValue(), Variables.currentUser);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        Variables.memoDateData.add(newMemoDate);
+                        setListView(Variables.memoDateData);
+                        break;
+                    }
+                    case Constants.TYPE_MEMO_DAILY:{
+                        try{
+                            newMemoDate = manager.createMemoDaily(memoTitle.getText(), memoText.getText(), LocalDate.now(),
+                                    LocalDate.now(),memoDatePicker.getValue(),Integer.parseInt(memoInterval.getText()),Variables.currentUser);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("YES");
+                        break;
+                    }
+                    case Constants.TYPE_EDUCATION:{
+                        break;
+                    }
+                    default:{
+
+                        break;
+                    }
                 }
 
-                    memoDateList.add(newMemoDate);
 
-                if(memoDateData == null)
-                    memoDateData = Variables.memoDateData;
-                memoDateData.add(newMemoDate);
-                setListView(memoDateData);
+
+                currentMemoDateList.add(newMemoDate);
+                initCurrentList();
+
                 clearText();
             }
         });
@@ -173,48 +211,15 @@ public class SectionController implements Initializable {
                 String newTitleValue = memoTitle.getText();
                 String newTextValue = memoText.getText();
                 LocalDate newDateValue = memoDatePicker.getValue();
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Wrong Input");
+                inputChecker();
 
-                if(memoTitle.getText() == ""){
-                    alert.setContentText("Invalid Memo_Title");
-                    alert.showAndWait();
-                    return;
-                }
 
-                if(memoText.getText() == ""){
-                    alert.setContentText("Invalid Memo_Text");
-                    alert.showAndWait();
-                    return;
-                }
-
-                if(memoDatePicker.getValue() == null){
-                    alert.setContentText("Invalid Memo_Date");
-                    alert.showAndWait();
-                    return;
-                }
-
-                if(memoDatePicker.getValue() == null){
-                    alert.setContentText("Invalid Memo_Date");
-                    alert.showAndWait();
-                    return;
-                }
-
-                if(currentMemoDate == null){
-                    alert.setContentText("Select memo date");
-                    alert.showAndWait();
-                    return;
-                }
-
-                if(memoDateList.size() <= 0)
-                    memoDateList = Variables.memoDateList;
-
-                for(int i = 0; i < memoDateList.size(); i++){
-                    if(memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
-                        memoDateList.get(i).setTitle(newTitleValue);
-                        memoDateList.get(i).setText(newTextValue);
-                        memoDateList.get(i).setNextRemindDate(newDateValue);
-                        currentMemoDate = memoDateList.get(i);
+                for(int i = 0; i < currentMemoDateList.size(); i++){
+                    if(currentMemoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
+                        currentMemoDateList.get(i).setTitle(newTitleValue);
+                        currentMemoDateList.get(i).setText(newTextValue);
+                        currentMemoDateList.get(i).setNextRemindDate(newDateValue);
+                        currentMemoDate = currentMemoDateList.get(i);
                     }
                 }
                 try {
@@ -235,33 +240,43 @@ public class SectionController implements Initializable {
         deleteMemoButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if(memoDateList.size() <= 0)
-                    memoDateList = Variables.memoDateList;
-                if(memoDateData == null)
-                    memoDateData = Variables.memoDateData;
 
-                for(int i = 0; i < memoDateList.size(); i++){
-                    if(memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
-                        System.out.println("id " + memoDateList.get(i).getMemoId() + "current id " + currentMemoDate.getMemoId());
+
+
+                for(int i = 0; i < currentMemoDateList.size(); i++){
+                    if(currentMemoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
+                        System.out.println("id " + currentMemoDateList.get(i).getMemoId() + "current id " + currentMemoDate.getMemoId());
                         if( databaseHandler == null)
                             databaseHandler = Variables.databaseHandler;
 
                         try {
-                            databaseHandler.deleteMemoDate(memoDateList.get(i).getMemoId());
+                            databaseHandler.deleteMemoDate(currentMemoDateList.get(i).getMemoId());
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
 
-                        memoDateList.remove(i);
-                        memoDateData.remove(i);
-                        i = memoDateList.size();
+                        currentMemoDateList.remove(i);
+                        Variables.memoDateData.remove(i);
+                        i = currentMemoDateList.size();
                     }
                 }
                 clearText();
-                setListView(memoDateData);
+                setListView(Variables.memoDateData);
+            }
+        });
+
+        memoInterval.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (!s.matches("\\d*")) {
+                    memoInterval.setText(t1.replaceAll("[^\\d]", ""));
+                }
             }
         });
     }
+
+
+
     private class CustomListCell extends ListCell<MemoDate> {
         private HBox content;
         private Text name;
@@ -298,6 +313,101 @@ public class SectionController implements Initializable {
         memoTitle.setText("");
     }
 
+    public void initCurrentList(){
+//        System.out.println( Variables.currentType + " check");
+        currentType = Variables.currentType;
+        currentMemoDateList = new ArrayList<>();
+
+
+        for(int i = 0; i < Variables.memoDateData.size(); i++){
+            Variables.memoDateData.remove(i);
+        }
+
+        listView.getSelectionModel().clearSelection();
+        switch (currentType) {
+            case Constants.TYPE_MEMO: {
+                memoDatePicker.setVisible(false);
+                dateLabel.setVisible(false);
+                memoInterval.setVisible(false);
+                intervalLabel.setVisible(false);
+                break;
+            }
+            case Constants.TYPE_MEMO_DATE: {
+                memoDatePicker.setVisible(true);
+                dateLabel.setVisible(true);
+                memoInterval.setVisible(false);
+                intervalLabel.setVisible(false);
+                break;
+            }
+            case Constants.TYPE_MEMO_DAILY: {
+                memoDatePicker.setVisible(false);
+                dateLabel.setVisible(false);
+                memoInterval.setVisible(true);
+                intervalLabel.setVisible(true);
+                break;
+            }
+
+            case Constants.TYPE_EDUCATION: {
+                memoDatePicker.setVisible(false);
+                dateLabel.setVisible(false);
+                memoInterval.setVisible(false);
+                intervalLabel.setVisible(false);
+                break;
+            }
+            default: {
+
+                break;
+            }
+        }
+
+
+        for(int i = 0; i < Variables.memoDateList.size(); i++){
+            if(Variables.memoDateList.get(i).getType() == currentType) {
+                currentMemoDateList.add(Variables.memoDateList.get(i));
+            }
+        }
+
+        Variables.memoDateData.addAll(currentMemoDateList);
+
+        setListView(Variables.memoDateData);
+        clearText();
+    }
+
+    private void inputChecker(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Wrong Input");
+        if(memoTitle.getText() == ""){
+            alert.setContentText("Invalid Memo_Title");
+            alert.showAndWait();
+            return;
+        }
+
+        if(memoText.getText() == ""){
+            alert.setContentText("Invalid Memo_Text");
+            alert.showAndWait();
+            return;
+        }
+
+        if(memoDatePicker.getValue() == null && currentType ==  Constants.TYPE_MEMO_DATE){
+            alert.setContentText("Invalid Memo_Date");
+            alert.showAndWait();
+            return;
+        }
+
+        if(memoDatePicker.getValue() == null && currentType ==  Constants.TYPE_MEMO_DATE){
+            alert.setContentText("Invalid Memo_Date");
+            alert.showAndWait();
+            return;
+        }
+
+        if(currentMemoDate == null && currentType ==  Constants.TYPE_MEMO_DATE){
+            alert.setContentText("Select memo date");
+            alert.showAndWait();
+            return;
+        }
+    }
+
+
     @FXML
     void onClickPaneAdd(MouseEvent event) {
         clearText();
@@ -305,6 +415,7 @@ public class SectionController implements Initializable {
 
     @FXML
     void onClickPaneBack(MouseEvent event) throws IOException {
+        listView.getSelectionModel().clearSelection();
         helloApplication.startFolderView();
     }
 

@@ -69,12 +69,10 @@ public class Manager {
     public void startAs(User userInput) throws SQLException {
         User asGuestUser = userInput;
         Variables.setCurrentUserData(asGuestUser);
-        memoDateList = asGuestUser.getMemoDateList();
+        Variables.memoDateList = asGuestUser.getMemoDateList();
         if(memoDateList == null)
             memoDateList = new ArrayList<MemoDate>();
-        for(int i = 0; i < memoDateList.size(); i++){
-            Variables.memoDateData.add(memoDateList.get(i));
-        }
+        Variables.sectionController.initCurrentList();
     }
 
     /**
@@ -92,12 +90,8 @@ public class Manager {
         if(asGuestUser == null)
             asGuestUser = createUser("AS GUEST username", "ASGUEST@email.com", "AS GUEST password",false,"AS", "GUEST", Constants.NULL_INT,"MALE");
         Variables.setCurrentUserData(asGuestUser);
-        memoDateList = asGuestUser.getMemoDateList();
-        if(memoDateList == null)
-            memoDateList = new ArrayList<MemoDate>();
-        for(int i = 0; i < memoDateList.size(); i++){
-            Variables.memoDateData.add(memoDateList.get(i));
-        }
+        Variables.memoDateList = asGuestUser.getMemoDateList();
+
     }
 
 //    private User createAsGuestUser(){
@@ -189,7 +183,7 @@ public class Manager {
         @Override
         public void run() {
             boolean tmp = getDueMemoDateList();
-            System.out.println("Check " + tmp);
+//            System.out.println("Check " + tmp);
         }
     };
 
@@ -241,7 +235,7 @@ public class Manager {
 
         if (remindTodaySize <= 0)
             return false;
-        System.out.println(remindTodaySize);
+//        System.out.println(remindTodaySize);
         notifyUser(remindTodaySize);
         return true;
     }

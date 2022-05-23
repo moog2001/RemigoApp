@@ -17,6 +17,8 @@ public class Variables {
     static public Manager manager;
     static public ObservableList<MemoDate> memoDateData;
 
+    static public int currentType;
+
     public static HelloApplication getHelloApplication() {
         return helloApplication;
     }

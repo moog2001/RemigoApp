@@ -39,6 +39,9 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
         ObservableList<MemoDate> memoDateData =  FXCollections.observableArrayList();
         Variables.memoDateData = memoDateData;
+        ObservableList<MemoDate> memoDateDaily =  FXCollections.observableArrayList();
+        Variables.memoDateData = memoDateDaily ;
+
         databaseHandler = new DatabaseHandler();
         Variables.setHelloApplication(this);
         Variables.setDatabaseHandler(databaseHandler);
@@ -75,7 +78,6 @@ public class HelloApplication extends Application {
         sectionStage.setScene(sceneSection);
         Variables.sectionController = sectionController;
         user = Variables.getCurrentUser();
-        sectionController.setListView(Variables.memoDateData);
 
         startLoginView();
 

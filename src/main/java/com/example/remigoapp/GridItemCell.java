@@ -25,13 +25,14 @@ public class GridItemCell extends GridCell<Section>{
         setText("Items: " + section.getList().size());
         getStyleClass().add("bold");
         int type = section.getType();
-
         switch (type){
             case Constants.TYPE_MEMO:{
                 svgPath.setFill(Color.GRAY);
                 this.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
+                        Variables.currentType = Constants.TYPE_MEMO;
+                        Variables.sectionController.initCurrentList();
                         Variables.getHelloApplication().startSectionView();
                     }
                 });
@@ -41,6 +42,8 @@ public class GridItemCell extends GridCell<Section>{
                 this.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
+                        Variables.currentType = Constants.TYPE_MEMO_DATE;
+                        Variables.sectionController.initCurrentList();
                         Variables.getHelloApplication().startSectionView();
                     }
                 });
@@ -50,6 +53,8 @@ public class GridItemCell extends GridCell<Section>{
                 this.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
+                        Variables.currentType = Constants.TYPE_MEMO_DAILY;
+                        Variables.sectionController.initCurrentList();
                         Variables.getHelloApplication().startSectionView();
                     }
                 });
@@ -59,11 +64,14 @@ public class GridItemCell extends GridCell<Section>{
                 this.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
+                        Variables.currentType = Constants.TYPE_EDUCATION;
+                        Variables.sectionController.initCurrentList();
                         Variables.getHelloApplication().startSectionView();
                     }
                 });
                 break;
             } default:{
+                Variables.sectionController.initCurrentList();
                 break;
             }
         }
