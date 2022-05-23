@@ -267,19 +267,21 @@ public class SectionController implements Initializable {
                         if( databaseHandler == null)
                             databaseHandler = Variables.databaseHandler;
 
-                        try {
-                            databaseHandler.deleteMemoDate(currentMemoDateList.get(i).getMemoId());
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
 
                         currentMemoDateList.remove(i);
                         Variables.memoDateData.remove(i);
                         i = currentMemoDateList.size();
                     }
                 }
+                try {
+                    databaseHandler.deleteMemoDate(currentMemoDate.getMemoId());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
                 clearText();
                 setListView(Variables.memoDateData);
+                listView.refresh();
             }
         });
 
@@ -389,7 +391,7 @@ public class SectionController implements Initializable {
     private void inputChecker(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Wrong Input");
-        if(memoTitle.getText() == ""){
+        if(memoTitle.getText() == ""|| memoTitle.getText() == null){
             alert.setContentText("Invalid Memo_Title");
             alert.showAndWait();
             return;

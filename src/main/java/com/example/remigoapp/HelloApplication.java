@@ -41,7 +41,7 @@ public class HelloApplication extends Application {
 
         manager = new Manager();
         Variables.setManager(manager);
-
+        manager.startTimer();
         currentStage = stage;
         FXMLLoader fxmlLoaderLoginView = new FXMLLoader(HelloApplication.class.getResource("login_view.fxml"));
         Scene sceneLogin = new Scene(fxmlLoaderLoginView.load());

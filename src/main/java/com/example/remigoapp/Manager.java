@@ -59,7 +59,6 @@ public class Manager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        startTimer();
 
     }
 
@@ -76,6 +75,7 @@ public class Manager {
         if(memoDateList == null)
             memoDateList = new ArrayList<MemoDate>();
         Variables.sectionController.initCurrentList();
+
     }
 
     /**
@@ -227,7 +227,7 @@ public class Manager {
 
                     }
                 });
-        Platform.runLater(() -> notificationBuilder.showWarning());
+        Platform.runLater(notificationBuilder::showWarning);
 
     }
 
