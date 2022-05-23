@@ -185,7 +185,7 @@ public class SectionController implements Initializable {
                     case Constants.TYPE_MEMO_DAILY:{
                         try{
                             newMemoDate = manager.createMemoDaily(memoTitle.getText(), memoText.getText(), LocalDate.now(),
-                                    LocalDate.now(),memoDatePicker.getValue(),Integer.parseInt(memoInterval.getText()),Variables.currentUser);
+                                    LocalDate.now(),LocalDate.now(),Integer.parseInt(memoInterval.getText()),Variables.currentUser);
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
@@ -209,7 +209,7 @@ public class SectionController implements Initializable {
                 Variables.memoDateData.add(newMemoDate);
                 initCurrentList();
                 currentMemoDateList.add(newMemoDate);
-
+                listView.refresh();
                 clearText();
             }
         });
@@ -226,7 +226,14 @@ public class SectionController implements Initializable {
                 LocalDate newDateValue = memoDatePicker.getValue();
                 inputChecker();
 
+                for(int i = 0; i < Variables.memoDateList.size();i++){
+                    if(Variables.memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
+                        Variables.memoDateList.get(i).setTitle(newTitleValue);
+                        Variables.memoDateList.get(i).setText(newTextValue);
+                        Variables.memoDateList.get(i).setNextRemindDate(newDateValue);
+                    }
 
+                }
                 for(int i = 0; i < currentMemoDateList.size(); i++){
                     if(currentMemoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
                         currentMemoDateList.get(i).setTitle(newTitleValue);
@@ -236,12 +243,15 @@ public class SectionController implements Initializable {
                     }
                 }
 
+
+
                 try {
                     databaseHandler.updateMemoDate(currentMemoDate);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
+                initCurrentList();
                 listView.refresh();
 
             }
@@ -256,14 +266,16 @@ public class SectionController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
 
-
+                for(int i = 0; i < Variables.memoDateList.size();i++){
+                    if(Variables.memoDateList.get(i).getMemoId() == currentMemoDate.getMemoId())
+                        Variables.memoDateList.remove(i);
+                }
 
                 for(int i = 0; i < currentMemoDateList.size(); i++){
                     if(currentMemoDateList.get(i).getMemoId() == currentMemoDate.getMemoId()){
                         System.out.println("id " + currentMemoDateList.get(i).getMemoId() + "current id " + currentMemoDate.getMemoId());
                         if( databaseHandler == null)
                             databaseHandler = Variables.databaseHandler;
-
 
                         currentMemoDateList.remove(i);
                         Variables.memoDateData.remove(i);
@@ -277,7 +289,7 @@ public class SectionController implements Initializable {
                 }
 
                 clearText();
-                setListView(Variables.memoDateData);
+                initCurrentList();
                 listView.refresh();
             }
         });
@@ -335,7 +347,6 @@ public class SectionController implements Initializable {
         currentType = Variables.currentType;
         currentMemoDateList = new ArrayList<>();
         Variables.memoDateData.clear();
-
         listView.getSelectionModel().clearSelection();
         switch (currentType) {
             case Constants.TYPE_MEMO: {
