@@ -223,7 +223,6 @@ public class DatabaseHandler {
         return true;
     }
 
-
     /**
      * notify delete to the database and save it there
      *
@@ -359,12 +358,12 @@ public class DatabaseHandler {
     }
 
     /**
-     * creates Memo object in the database and returns the id in it.
+     * creates Memo object in the database for the user with userIdInput and returns the id of the Memo in it.
      * remember to set the returned id.
      *
      * @param memoInput
      * @param userIdInput
-     * @return
+     * @return memoId
      * @throws SQLException
      * @author Moog
      * @version 1.0.0
