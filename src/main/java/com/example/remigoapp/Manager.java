@@ -44,14 +44,44 @@ public class Manager {
         this.memoDateList = Variables.memoDateList;
         this.remindTodayList = Variables.remindTodayList;
 
+    }
+
+    /**
+     * sets the program by as guest user
+     * @author Moog
+     */
+    public void startAsUser(){
         try {
             setUpAsGuest();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         startTimer();
 
+    }
+
+    /**
+     * starts the program by a user
+     * @param userInput
+     * @author Moog
+     * @throws SQLException
+     */
+    public void startAs(User userInput) throws SQLException {
+        User asGuestUser = userInput;
+        Variables.setCurrentUserData(asGuestUser);
+        memoDateList = asGuestUser.getMemoDateList();
+        if(memoDateList == null)
+            memoDateList = new ArrayList<MemoDate>();
+        for(int i = 0; i < memoDateList.size(); i++){
+            Variables.memoDateData.add(memoDateList.get(i));
+        }
+    }
+
+    /**
+     * refreshes the App with current variables
+     */
+    public void refresh(){
+        Variables.getHelloApplication().getFolderController().refresh();
     }
 
     /**

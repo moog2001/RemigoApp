@@ -12,6 +12,7 @@ import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
 
 import java.io.IOException;
+import java.util.List;
 
 public class FolderController {
 
@@ -44,10 +45,19 @@ public class FolderController {
                 return new GridItemCell();
             }
         });
-        ObservableList<Section> list = FXCollections.observableArrayList(Variables.getCurrentUser().getSections());
-        gvFolderList.setItems(list);
+
+        refresh();
 
     }
+
+    public void refresh(){
+        if(Variables.getCurrentUser()==null){
+            return;
+        }
+        ObservableList<Section> list = FXCollections.observableArrayList(Variables.getCurrentUser().getSections());
+        gvFolderList.setItems(list);
+    }
+
 
     @FXML
     void onClickPaneAdd(MouseEvent event) {

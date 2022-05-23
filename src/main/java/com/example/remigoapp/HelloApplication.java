@@ -25,9 +25,12 @@ public class HelloApplication extends Application {
     DatabaseHandler databaseHandler;
     Stage currentStage;
     Stage loginStage;
+    Stage registerStage;
     Stage folderStage;
     Stage sectionStage;
+
     LoginController loginController;
+    RegisterController registerController;
     SectionController sectionController;
     FolderController folderController;
 
@@ -50,6 +53,14 @@ public class HelloApplication extends Application {
         loginStage = new Stage();
         loginStage.setTitle("Login");
         loginStage.setScene(sceneLogin);
+
+        FXMLLoader fxmlLoaderRegisterView = new FXMLLoader(HelloApplication.class.getResource("register_view.fxml"));
+        Scene sceneRegister = new Scene(fxmlLoaderRegisterView.load());
+        registerController = fxmlLoaderRegisterView.getController();
+        registerStage = new Stage();
+        registerStage.setTitle("Register");
+        registerStage.setScene(sceneRegister);
+
         FXMLLoader fxmlLoaderFolderView = new FXMLLoader(HelloApplication.class.getResource("folder_view.fxml"));
         Scene sceneFolder = new Scene(fxmlLoaderFolderView.load());
         folderController = fxmlLoaderFolderView.getController();
@@ -66,7 +77,7 @@ public class HelloApplication extends Application {
         user = Variables.getCurrentUser();
         sectionController.setListView(Variables.memoDateData);
 
-        startFolderView();
+        startLoginView();
 
     }
 
@@ -112,6 +123,18 @@ public class HelloApplication extends Application {
         sectionStage.show();
         return true;
     }
+
+    public boolean startRegisterView() {
+        if (currentStage != null) {
+            currentStage.close();
+        }
+
+        currentStage = registerStage;
+        registerStage.show();
+        return true;
+    }
+
+
 
 
     public static void main(String[] args) {
