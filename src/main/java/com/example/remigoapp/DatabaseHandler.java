@@ -22,8 +22,8 @@ public class DatabaseHandler {
         c = DriverManager.getConnection(Constants.JCDB_CONNECTION);
         Statement statement = c.createStatement();
         statement.executeUpdate("PRAGMA foreign_keys = ON"); // this line allows cascade delete on the sql database
-//        resetDatabaseData("agreed");
-//        resetAsGuest();
+        resetDatabaseData("agreed");
+        resetAsGuest();
     }
 
 
@@ -563,7 +563,7 @@ public class DatabaseHandler {
             memoIdList.add(resultSet.getInt("memo_id"));
         }
         for(int i = 0; i < memoIdList.size(); i++){
-            int memoId = resultSet.getInt(3);
+            int memoId = memoIdList.get(i);
             resultSet = statement.executeQuery("select * from memo where memo_id=" + memoId);
             if (resultSet.next()) {
                 int type = resultSet.getInt(2);
