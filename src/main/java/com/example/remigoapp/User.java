@@ -25,6 +25,7 @@ public class User extends Person {
     private boolean isGuest;
     private List<Memo> memoList = new ArrayList<>();
     private List<MemoDate> memoDateList = new ArrayList<>();
+    private List<Section> sections = new ArrayList<>();
 
     /**
      * This constructs a User without parameters.
@@ -59,8 +60,8 @@ public class User extends Person {
         this.gender = gender;
         this.memoList = memoList;
         this.memoDateList = memoDateList;
-        Variables.memoList = memoList;
-        Variables.memoDateList = memoDateList;
+        setupSections();
+
     }
 
     /**
@@ -75,6 +76,8 @@ public class User extends Person {
         this.eMail = eMail;
         this.password = password;
         this.isGuest = isGuest;
+        setupSections();
+
     }
 
     /**
@@ -100,8 +103,19 @@ public class User extends Person {
         this.lastName = lastName;
         this.age = age;
         this.gender = gender;
-        this.memoList = new ArrayList<Memo>();
-        this.memoDateList = new ArrayList<MemoDate>();
+        setupSections();
+    }
+
+    private boolean setupSections(){
+        Section memoSection = new Section(getMemoList(), Constants.TYPE_MEMO);
+        sections.add(memoSection);
+        Section memoDateSection = new Section(getMemoDateListSingle(), Constants.TYPE_MEMO_DATE);
+        sections.add(memoDateSection);
+        Section memoDailySection = new Section(getMemoDailyList(), Constants.TYPE_MEMO_DAILY);
+        sections.add(memoDailySection);
+        Section Education = new Section(getEducation(), Constants.TYPE_EDUCATION);
+        sections.add(Education);
+        return true;
     }
 
     /**
@@ -124,8 +138,8 @@ public class User extends Person {
      * @author Moog
      * @return
      */
-    public List<MemoDate> getMemoDateListSingle() {
-        List<MemoDate> list = new ArrayList<>();
+    public List<Memo> getMemoDateListSingle() {
+        List<Memo> list = new ArrayList<>();
         memoDateList.forEach(memoDate -> {
             if(!(memoDate instanceof MemoDaily)){
                 list.add(memoDate);
@@ -139,8 +153,8 @@ public class User extends Person {
      * @author Moog
      * @return
      */
-    public List<MemoDaily> getMemoDailyList() {
-        List<MemoDaily> list = new ArrayList<>();
+    public List<Memo> getMemoDailyList() {
+        List<Memo> list = new ArrayList<>();
         memoDateList.forEach(memoDaily -> {
             if(!(memoDaily instanceof Education) && (memoDaily instanceof MemoDaily)){
                 list.add((MemoDaily) memoDaily);
@@ -154,8 +168,8 @@ public class User extends Person {
      * @author Moog
      * @return
      */
-    public List<Education> getEducation() {
-        List<Education> list = new ArrayList<>();
+    public List<Memo> getEducation() {
+        List<Memo> list = new ArrayList<>();
         memoDateList.forEach(education -> {
             if((education instanceof Education)){
                 list.add((Education) education);
@@ -207,5 +221,13 @@ public class User extends Person {
 
     public void setGuest(boolean guest) {
         isGuest = guest;
+    }
+
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
     }
 }

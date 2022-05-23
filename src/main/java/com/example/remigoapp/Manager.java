@@ -239,13 +239,4 @@ public class Manager {
          Variables.remindTodayList = remindTodayList;
 
     }
-
-    /**
-     * Simple setter method for currentUser.
-     */
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
-
-
 }
