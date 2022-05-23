@@ -1,7 +1,5 @@
 package com.example.remigoapp;
 
-import com.example.remigoapp.Memo.Memo;
-
 import java.util.List;
 
 public class Section {

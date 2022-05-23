@@ -8,13 +8,13 @@
  * interval: interval days of nextRemindDate
  * type: type of this class
  */
-package com.example.remigoapp.Memo;
+package com.example.remigoapp;
 
 import com.example.remigoapp.Constants;
 
 import java.time.LocalDate;
 
-public class MemoDaily extends MemoDate{
+public class MemoDaily extends MemoDate {
     protected int interval;
     private static final int type = Constants.TYPE_MEMO_DAILY;
 
