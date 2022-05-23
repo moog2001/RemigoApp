@@ -46,6 +46,10 @@ public class MemoDaily extends MemoDate{
         this.interval = interval;
     }
 
+    public void resetInterval(){
+
+    }
+
     /**
      * Simple getter and setter methods for all the parameters.
      */

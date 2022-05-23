@@ -59,17 +59,52 @@
 
                <DatePicker BorderPane.alignment="CENTER" />
                <top>
-                  <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <HBox prefHeight="200.0" prefWidth="700.0" BorderPane.alignment="CENTER">
                      <children>
-                        <TextField fx:id="memoTitle" maxWidth="200.0" minHeight="50.0" minWidth="50.0" prefHeight="65.0" prefWidth="174.0" promptText="Memo title" />
-                        <DatePicker fx:id="memoDatePicker" prefHeight="33.0" prefWidth="198.0" promptText="MM-DD-YYYY" showWeekNumbers="true">
-                           <cursor>
-                              <Cursor fx:constant="DEFAULT" />
-                           </cursor>
-                        </DatePicker>
-                        <Button fx:id="addMemoButton" mnemonicParsing="false" prefWidth="76.0" text="Add Memo" />
-                        <Button fx:id="deleteMemoButton" mnemonicParsing="false" text="Delete" />
-                        <Button fx:id="updateMemoButton" mnemonicParsing="false" text="Update" />
+                        <VBox prefHeight="231.0" prefWidth="350.0">
+                           <children>
+                              <Label fx:id="titleLabel" text="Title" />
+                              <TextField fx:id="memoTitle" maxWidth="200.0" minHeight="50.0" minWidth="50.0" prefHeight="65.0" prefWidth="200.0" promptText="Memo title">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Label fx:id="dateLabel" text="Next remind date" />
+                              <DatePicker fx:id="memoDatePicker" prefHeight="33.0" prefWidth="200.0" promptText="MM-DD-YYYY" showWeekNumbers="true">
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </DatePicker>
+                              <Label fx:id="intervalLabel" text="Interval" />
+                              <TextField fx:id="memoInterval" maxHeight="50.0" maxWidth="100.0" minHeight="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="200.0" promptText="Memo Interval">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_RIGHT" prefHeight="231.0" prefWidth="178.0">
+                           <children>
+                              <Button fx:id="addMemoButton" mnemonicParsing="false" prefWidth="160.0" text="Add Memo">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="updateMemoButton" mnemonicParsing="false" prefWidth="160.0" text="Update">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="deleteMemoButton" mnemonicParsing="false" prefWidth="160.0" text="Delete">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                </top>
